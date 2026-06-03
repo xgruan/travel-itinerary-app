@@ -1,0 +1,11 @@
+# Python output files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local data files
+travel_data.json
+*.json.bak
+
+# macOS files
+.DS_Store
