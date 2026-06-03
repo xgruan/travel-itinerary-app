@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>法意纵贯 · 文艺复兴之路 - 10日旅游行程</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- LZ-String for Link Sharing Compression -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f7fafc;
+        }
+        .serif-title {
+            font-family: 'Playfair Display', "Georgia", serif;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header Section -->
+    <header class="relative bg-cover bg-center h-[400px]" style="background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1950&q=80');">
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+            <span class="text-amber-400 font-semibold tracking-widest text-xs md:text-sm uppercase mb-2 bg-black/30 px-3 py-1 rounded-full backdrop-blur-sm">
+                <i class="fa-solid fa-compass spin mr-1"></i> 10日欧陆漫游全计划
+            </span>
+            <h1 class="serif-title text-white text-3xl md:text-5xl lg:text-6xl font-bold tracking-wide drop-shadow-lg mb-3">
+                法意纵贯 · 文艺复兴之路
+            </h1>
+            <p class="text-gray-200 text-sm md:text-lg tracking-wider max-w-2xl font-light">
+                巴黎 - 尼斯 - 佛罗伦萨 - 威尼斯 - 罗马 | 艺术、历史与蔚蓝海岸的完美融合
+            </p>
+            <div class="mt-6 flex flex-wrap justify-center gap-3">
+                <button onclick="resetData(true)" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 text-xs md:text-sm px-4 py-2 rounded-full backdrop-blur-sm transition duration-300">
+                    <i class="fa-solid fa-arrows-rotate mr-1"></i> 重置默认行程
+                </button>
+                <button onclick="exportJSON()" class="bg-amber-500/80 hover:bg-amber-500 text-white font-medium text-xs md:text-sm px-4 py-2 rounded-full shadow-lg transition duration-300">
+                    <i class="fa-solid fa-file-export mr-1"></i> 备份
+                </button>
+                <label class="bg-emerald-600/80 hover:bg-emerald-600 text-white font-medium text-xs md:text-sm px-4 py-2 rounded-full shadow-lg transition duration-300 cursor-pointer flex items-center">
+                    <i class="fa-solid fa-file-import mr-1"></i> 导入
+                    <input type="file" id="importFile" onchange="importJSON(event)" class="hidden" accept=".json">
+                </label>
+                <button onclick="generateShareLink()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs md:text-sm px-4 py-2 rounded-full shadow-lg transition duration-300 flex items-center">
+                    <i class="fa-solid fa-share-nodes mr-1.5"></i> 一键分享给朋友
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Sidebar: Overview & Key Tips -->
+        <div class="lg:col-span-4 space-y-6">
+            
+            <!-- Quick Info Panel -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h3 class="text-lg font-bold text-gray-900 border-b border-gray-100 pb-3 mb-4 flex items-center">
+                    <i class="fa-solid fa-circle-info text-blue-500 mr-2"></i> 行程概览
+                </h3>
+                <ul class="space-y-4 text-sm text-gray-600">
+                    <li class="flex items-center">
+                        <span class="w-8 h-8 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-calendar-days"></i></span>
+                        <div>
+                            <p class="font-bold text-gray-800">总天数</p>
+                            <p>10天 (跨越 2 个国家)</p>
+                        </div>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-calendar-day"></i></span>
+                        <div class="flex-1">
+                            <p class="font-bold text-gray-800">出发旅行日期</p>
+                            <input type="date" id="tour-start-date" onchange="updateStartDate(this.value)" class="mt-1 w-full text-xs px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-amber-500 outline-none hover:border-gray-300 transition" title="设定首日出发时间，后续日程将自动排期">
+                        </div>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="w-8 h-8 rounded-full bg-amber-50 text-amber-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-route"></i></span>
+                        <div>
+                            <p class="font-bold text-gray-800">纵贯途径</p>
+                            <p>巴黎 ➔ 尼斯 ➔ 佛罗伦萨 ➔ 威尼斯 ➔ 罗马</p>
+                        </div>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="w-8 h-8 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-train"></i></span>
+                        <div>
+                            <p class="font-bold text-gray-800">主交通方式</p>
+                            <p>TGV高铁 + 跨国火车 + 意铁/italo</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Key Tips Section -->
+            <div class="bg-amber-50/70 border border-amber-200/50 rounded-2xl p-6 shadow-sm">
+                <div class="flex items-center justify-between border-b border-amber-200/50 pb-3 mb-4">
+                    <h3 class="text-amber-800 text-lg font-bold flex items-center">
+                        <i class="fa-solid fa-lightbulb mr-2 text-amber-600"></i> 行前重点提醒
+                    </h3>
+                    <button onclick="openTipsModal()" class="text-xs text-amber-700 hover:text-amber-900 font-medium underline flex items-center gap-1">
+                        <i class="fa-solid fa-pen-to-square"></i> 修改
+                    </button>
+                </div>
+                <div id="tips-container" class="space-y-3 text-sm text-amber-950/80 leading-relaxed">
+                    <!-- Tips loaded dynamically from Javascript -->
+                </div>
+            </div>
+
+            <!-- Share Information Info -->
+            <div id="cloud-sync-card" class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 relative overflow-hidden transition-all duration-300">
+                <!-- Loaded dynamically by renderCloudSyncCard() -->
+            </div>
+
+        </div>
+
+        <!-- Right Content: Days Timeline -->
+        <div class="lg:col-span-8 space-y-6">
+            
+            <!-- Filter or Quick Nav of Days -->
+            <div class="sticky top-4 z-40 bg-white/95 backdrop-blur-md rounded-2xl px-6 py-4 shadow-sm border border-gray-100 flex items-center justify-between overflow-x-auto gap-4">
+                <span class="font-bold text-gray-900 shrink-0 text-sm md:text-base">
+                    <i class="fa-solid fa-map"></i> 日程导航:
+                </span>
+                <div class="flex gap-2 py-1 select-none overflow-x-auto no-scrollbar scroll-smooth items-center">
+                    <button onclick="scrollToDay('all')" id="nav-btn-all" class="nav-btn active shrink-0 px-2.5 py-1 rounded-xl text-white bg-gray-900 shadow-sm border border-transparent transition duration-200 flex flex-col items-center justify-center min-w-[56px] h-[44px]">
+                        <span class="text-xs font-bold leading-none">全部</span>
+                        <span class="text-[9px] opacity-75 font-medium leading-none mt-1">All</span>
+                    </button>
+                    <!-- Days loaded dynamically (D1, D2...) -->
+                    <div id="day-nav-container" class="flex gap-2"></div>
+                </div>
+            </div>
+
+            <!-- Days Timeline View Container -->
+            <div id="days-container" class="space-y-8">
+                <!-- Day detailed card dynamically loaded -->
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 mt-20 py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-4">
+            <h3 class="serif-title text-white text-xl font-bold tracking-wider">法意纵贯 · 文艺复兴之路 10日全计划</h3>
+            <p class="text-sm max-w-md mx-auto leading-relaxed">
+                完美的法国与意大利十日自助行解决方案。随心定制，支持导入导出，全家人协同出游好帮手。
+            </p>
+            <div class="text-xs text-gray-600 pt-4 border-t border-gray-800">
+                &copy; 2026年 自由行设计网站。使用 HTML5 LocalStorage 技术存储，无需担心隐私。
+            </div>
+        </div>
+    </footer>
+
+    <!-- Day Edit Modal -->
+    <div id="edit-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/60 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl transform transition-all duration-300">
+            <div class="bg-gray-900 text-white px-6 py-4 flex items-center justify-between">
+                <h3 class="text-lg font-bold" id="modal-title">编辑 Day 行程</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-white transition"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div class="p-6 space-y-4">
+                <input type="hidden" id="edit-day-index">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">天数标题 (例如: Day 1)</label>
+                        <input type="text" id="edit-day-num" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">主题 (例如: 抵达巴黎 - 塞纳河畔夜未眠)</label>
+                        <input type="text" id="edit-day-title" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">所属阶段 / 城市 (例如: 巴黎艺术与浪漫)</label>
+                        <input type="text" id="edit-day-phase" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">具体特定日期 (可选，留空则自动按顺序计算)</label>
+                        <input type="date" id="edit-day-custom-date" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">交通工具 (如：TGV高铁，无则留空)</label>
+                        <input type="text" id="edit-day-transport" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none" placeholder="TGV高铁 / 跨国火车 / 意铁">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">交通时长及建议（无则留空）</label>
+                        <input type="text" id="edit-day-duration" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none" placeholder="5.5小时 / 建议班次：09:10-14:55">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">住宿城市 / 酒店 (例如: 巴黎)</label>
+                        <input type="text" id="edit-day-accommodation" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none" placeholder="巴黎 / 尼斯 / 佛罗伦萨">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">航班信息 (无则留空)</label>
+                        <input type="text" id="edit-day-flight" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none" placeholder="参考航班：CA833 上海 ➔ 巴黎">
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <label class="block text-xs font-semibold text-gray-500 uppercase">行程细节及活动安排 (上午 / 下午 / 晚上)</label>
+                        <button onclick="addEditActivity()" class="text-xs bg-amber-100 hover:bg-amber-200 text-amber-800 font-bold px-2 py-1 rounded">
+                            <i class="fa-solid fa-plus"></i> 添加活动
+                        </button>
+                    </div>
+                    <div id="edit-activities-container" class="space-y-2 max-h-56 overflow-y-auto pr-1">
+                        <!-- Dynamic items loaded -->
+                    </div>
+                </div>
+
+            </div>
+            <div class="bg-gray-50 px-6 py-4 flex justify-end gap-3 border-t border-gray-100">
+                <button onclick="closeModal()" class="px-4 py-2 border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-100 transition text-sm">
+                    取消
+                </button>
+                <button onclick="saveDayChanges()" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg shadow font-medium transition text-sm">
+                    保存修改
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tips Edit Modal -->
+    <div id="tips-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-black/60 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl transform transition-all duration-300">
+            <div class="bg-gray-900 text-white px-6 py-4 flex items-center justify-between">
+                <h3 class="text-lg font-bold">编辑行前提醒</h3>
+                <button onclick="closeTipsModal()" class="text-gray-400 hover:text-white transition"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="flex items-center justify-between">
+                    <label class="block text-xs font-semibold text-gray-500 uppercase">行前重点提醒列表</label>
+                    <button onclick="addEditTip('')" class="text-xs bg-amber-100 hover:bg-amber-200 text-amber-800 font-bold px-2 py-1 rounded">
+                        <i class="fa-solid fa-plus"></i> 添加提醒
+                    </button>
+                </div>
+                <div id="edit-tips-container" class="space-y-2 max-h-80 overflow-y-auto pr-1">
+                    <!-- Dynamic tips inputs -->
+                </div>
+            </div>
+            <div class="bg-gray-50 px-6 py-4 flex justify-end gap-3 border-t border-gray-100">
+                <button onclick="closeTipsModal()" class="px-4 py-2 border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-100 transition text-sm">
+                    取消
+                </button>
+                <button onclick="saveTipsChanges()" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg shadow font-medium transition text-sm">
+                    保存修改
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Default Travel Itinerary Data based on User Document
+        const defaultData = {
+            tips: [
+                "三大抢票难点：卢浮宫、梵蒂冈博物馆、乌菲兹美术馆务必提前预订门票！",
+                "8月酷暑避暑：下午 13:00-16:00 建议在室内或回酒店小憩，17:00 后再开启户外游步览。",
+                "佛罗伦萨美食：推荐尝试T骨牛排（Bistecca alla Fiorentina）及中央市场的特色小吃。",
+                "交通工具：意大利高铁建议下载 Trenitalia 或 Italo 官方App以便实时监控站台和延迟。"
+            ],
+            days: [
+                {
+                    dayNum: "Day 1",
+                    title: "抵达巴黎 - 塞纳河畔夜未眠",
+                    phase: "第一阶段：巴黎艺术与浪漫",
+                    transport: "",
+                    duration: "",
+                    accommodation: "巴黎中心埃菲尔铁塔美居酒店 (Hôtel Mercure Paris Centre Tour Eiffel)",
+                    flight: "东航 MU569 | 上海浦东 PVG (12:30 起飞) ➔ 巴黎 CDG (19:05 降落)",
+                    activities: [
+                        { time: "中午/傍晚", detail: "【班机直飞】12:30 搭乘东方航空 MU569 班机自上海浦东(PVG)起飞，经过约12.5小时舒适飞行，于 19:05 降落巴黎戴高乐机场(CDG)。" },
+                        { time: "晚上", detail: "【办妥入住】抵达机场办理入境并提取行李，乘车前往巴黎市区酒店，放置行李稍作休整。" },
+                        { time: "夜间", detail: "乘坐塞纳河游船，欣赏经由灯光渲染的巴黎圣母院及埃菲尔铁塔夜景，开始塞纳河畔夜未眠美妙之夜。" }
+                    ]
+                },
+                {
+                    dayNum: "Day 2",
+                    title: "人类艺术巅峰 - 卢浮宫与蒙马特",
+                    phase: "第一阶段：巴黎艺术与浪漫",
+                    transport: "",
+                    duration: "",
+                    accommodation: "巴黎中心埃菲尔铁塔美居酒店 (Hôtel Mercure Paris Centre Tour Eiffel)",
+                    flight: "",
+                    activities: [
+                        { time: "上午", detail: "参观人类艺术之巅——卢浮宫（务必预约09:00场）。" },
+                        { time: "下午", detail: "游览凯旋门，沿浪漫的香榭丽舍大街漫步。" },
+                        { time: "傍晚", detail: "前往蒙马特高地圣心大教堂，在顶峰俯瞰全巴黎全城日落。" }
+                    ]
+                },
+                {
+                    dayNum: "Day 3",
+                    title: "印象派圣地与河畔漫步",
+                    phase: "第一阶段：巴黎艺术与浪漫",
+                    transport: "",
+                    duration: "",
+                    accommodation: "巴黎中心埃菲尔铁塔美居酒店 (Hôtel Mercure Paris Centre Tour Eiffel)",
+                    flight: "",
+                    activities: [
+                        { time: "上午", detail: "参观奥赛博物馆，深度游览莫奈、凡高、塞尚等大师的印象派神作。" },
+                        { time: "下午", detail: "于塞纳河右岸的莎玛丽丹百货（La Samaritaine）或者歌剧院区自由行，尽享购物与极美法意风格街景。" },
+                        { time: "晚上", detail: "体验地道有烟火气的经典法式Bistro（小餐馆），品尝传统法餐特色餐点。" }
+                    ]
+                },
+                {
+                    dayNum: "Day 4",
+                    title: "巴黎 ➔ 尼斯 (跨越法兰西)",
+                    phase: "第二阶段：蔚蓝海岸阳光",
+                    transport: "TGV高铁",
+                    duration: "耗时：5.5小时 | 建议班次：09:10 - 14:55",
+                    accommodation: "尼斯阿斯顿拉斯卡拉酒店 (Hôtel Aston La Scala)",
+                    flight: "",
+                    activities: [
+                        { time: "上午/下午", detail: "早起乘车前往火车站，搭乘超舒适的TGV高铁，穿越美丽的法国田野前往蔚蓝海岸尼斯。" },
+                        { time: "下午", detail: "抵达尼斯，办理入住。下午前往著名的“英国人漫步大道”吹海风、散步。" },
+                        { time: "傍晚", detail: "逛尼斯老城（Old Town），晚餐享用尼斯海鲜拼盘。" }
+                    ]
+                },
+                {
+                    dayNum: "Day 5",
+                    title: "蔚蓝精华：埃兹小镇与摩纳哥",
+                    phase: "第二阶段：蔚蓝海岸阳光",
+                    transport: "乘车/巴士",
+                    duration: "全天往返",
+                    accommodation: "尼斯阿斯顿拉斯卡拉酒店 (Hôtel Aston La Scala)",
+                    flight: "",
+                    activities: [
+                        { time: "上午", detail: "乘中巴车/公交前往中世纪悬崖中古小镇——埃兹小镇（Eze），俯瞰地中海蔚蓝绝景。" },
+                        { time: "下午", detail: "前往摩纳哥公国游览豪华游艇港口，近距离感受蒙特卡洛的奢华与皇室底蕴。" },
+                        { time: "傍晚/晚上", detail: "返回尼斯，漫步尼斯海湾看华灯初上。" }
+                    ]
+                },
+                {
+                    dayNum: "Day 6",
+                    title: "尼斯 ➔ 佛罗伦萨 (跨国之旅)",
+                    phase: "第三阶段：文艺复兴摇篮与水城",
+                    transport: "跨国火车",
+                    duration: "耗时约6小时 (经热那亚中转) | 建议时间：08:30 - 14:30",
+                    accommodation: "佛罗伦萨巴廖尼大酒店 (Grand Hotel Baglioni)",
+                    flight: "",
+                    activities: [
+                        { time: "上午/下午", detail: "退房坐跨国列车体验风景最优美的意法沿海岸线铁道，中途在意大利热那亚（Genoa）简要换乘后前往佛罗伦萨。" },
+                        { time: "下午", detail: "抵达“翡冷翠”佛罗伦萨。首先游览佛罗伦萨地标、外墙极为华美瑰丽的圣母百花大教堂。" },
+                        { time: "傍晚", detail: "登上米开朗基罗广场，手执吉拉托Gelato，一同饱览整座城市文艺复兴砖红穹顶在晚霞中的绝美时刻。" }
+                    ]
+                },
+                {
+                    dayNum: "Day 7",
+                    title: "佛罗伦萨 ➔ 威尼斯",
+                    phase: "第三阶段：文艺复兴摇篮与水城",
+                    transport: "意铁高铁",
+                    duration: "耗时2.2小时 | 建议时间：15:00 - 17:15",
+                    accommodation: "威尼斯斯普兰迪德星级酒店 (Splendid Venice - Starhotels Collezione)",
+                    flight: "",
+                    activities: [
+                        { time: "上午", detail: "参观馆藏丰富的乌菲兹美术馆（Galleria degli Uffizi），驻足品读波提切利《维纳斯的诞生》、达芬奇《三博士来朝》等世界名作。" },
+                        { time: "中午/下午", detail: "在中央市场（Mercato Centrale）品尝超爽口鲜香的经典佛罗伦萨牛肚包与米其林级别的T骨牛排。" },
+                        { time: "下午", detail: "乘意铁高铁前往举世闻名的浪漫水城——威尼斯 (2.2h)，体验水路巴士抵达主岛威尼斯。" },
+                        { time: "晚上", detail: "于极具情调的圣马可广场（Piazza San Marco）漫步，享受现场乐队列演奏的意大利浪漫夜曲。" }
+                    ]
+                },
+                {
+                    dayNum: "Day 8",
+                    title: "威尼斯 ➔ 罗马 (南下永恒之城)",
+                    phase: "第四阶段：深度罗马与梵蒂冈",
+                    transport: "高铁 (Venezia S. Lucia ➔ Roma Termini)",
+                    duration: "耗时 3小时50分钟 | 建议时间：08:26 - 12:25",
+                    accommodation: "罗马大都会星级酒店 (Starhotels Metropole Rome)",
+                    flight: "",
+                    activities: [
+                        { time: "中午", detail: "抵达意大利首都、千年古城罗马。前往酒店收拾妥当。" },
+                        { time: "下午", detail: "探访古典比例完美的万神殿（Pantheon）、在著名的特莱维喷泉（法国著名电影中赫本买雪糕的“许愿池”）投下硬币。" },
+                        { time: "下午/晚上", detail: "漫步美丽的纳沃纳广场（Piazza Navona），欣赏贝尼尼的四河喷泉。晚餐可以品尝罗马卡邦尼意面。" }
+                    ]
+                },
+                {
+                    dayNum: "Day 9",
+                    title: "信仰与辉煌：梵蒂冈全天",
+                    phase: "第四阶段：深度罗马与梵蒂冈",
+                    transport: "",
+                    duration: "",
+                    accommodation: "罗马大都会星级酒店 (Starhotels Metropole Rome)",
+                    flight: "",
+                    activities: [
+                        { time: "上午", detail: "提早预订梵蒂冈博物馆（Vatican Museums）门票。看西斯廷教堂里米开朗基罗的巅峰巨作《创世纪》和《最后的审判》以及拉斐尔画室。" },
+                        { time: "下午", detail: "参观基督教第一宏伟殿堂——圣彼得大教堂。一定选择登顶，俯瞰由贝尼尼宏伟设计的对称“钥匙孔”造型圣彼得广场。" },
+                        { time: "傍晚", detail: "慢慢漫步到圣天使桥，看夕阳余晖下台伯河的潺潺水波与宏阔剪影。" }
+                    ]
+                },
+                {
+                    dayNum: "Day 10",
+                    title: "帝国遗迹与返程",
+                    phase: "第四阶段：深度罗马与梵蒂冈",
+                    transport: "返程航班",
+                    duration: "晚间离境",
+                    accommodation: "飞机上 (东方航空 MU788 航班机舱)",
+                    flight: "东航 MU788 | 罗马 FCO (21:10 起飞) ➔ 上海浦东 PVG (次日 14:35 降落)",
+                    activities: [
+                        { time: "上午", detail: "漫步于罗马的心脏——古罗马斗兽场（Colosseum）、君士坦丁凯旋门，穿行于宏伟废墟的古罗马遗址中，探寻千年前的帝国盛景。" },
+                        { time: "下午/傍晚", detail: "收拾行李，于 16:00 左右前往罗马菲乌米奇诺机场 (FCO)，预留充沛时间享用简餐，并办妥意大利及法国的退税手续。" },
+                        { time: "晚上", detail: "【搭乘班机】21:10 搭乘东方航空 MU788 航班自罗马直飞回国。宿机舱中，次日 14:35 顺利抵达上海浦东国际机场 (PVG)，结束丰富精彩的法意十日之旅！" }
+                    ]
+                }
+            ]
+        };
+
+        let currentData = null;
+
+        // Cloud Database Channels Configuration (using KVDB.io high-availability Redis cloud)
+        const CLOUD_BUCKET = "X5fLdaQJGa8gmuz3sxqrgF";
+        const CLOUD_URL_BASE = `https://kvdb.io/${CLOUD_BUCKET}/`;
+        let cloudChannel = localStorage.getItem('cloud_channel_code') || '';
+
+        // Initialize Data
+        async function initData() {
+            // First check if there is cloud parameter inside the URL query string
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlCode = urlParams.get('code');
+            if (urlCode) {
+                const cleanedCode = urlCode.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '');
+                if (cleanedCode) {
+                    cloudChannel = cleanedCode;
+                    localStorage.setItem('cloud_channel_code', cloudChannel);
+                    // Standardize search query param peacefully
+                    window.history.replaceState({}, document.title, window.location.pathname + `?code=${cloudChannel}`);
+                }
+            }
+
+            const sharedCompressed = urlParams.get('d');
+            if (sharedCompressed) {
+                try {
+                    const decompressed = LZString.decompressFromEncodedURIComponent(sharedCompressed);
+                    if (decompressed) {
+                        const parsed = JSON.parse(decompressed);
+                        if (parsed && parsed.days && parsed.days.length > 0) {
+                            currentData = parsed;
+                            console.log("成功读取URL中分享的专属行程！");
+                            // Save to local so the user retains it
+                            localStorage.setItem('travel_itinerary_data_v1', JSON.stringify(currentData));
+                            
+                            // Remove query param without reloading to keep URL clean
+                            window.history.replaceState({}, document.title, window.location.pathname);
+                            
+                            renderAll();
+                            alert("🎉 成功加载朋友分享给您的定制行程！您做出的更改也会在本地保存。");
+                            return;
+                        }
+                    }
+                } catch (e) {
+                    console.error("解析URL数据失败: ", e);
+                }
+            }
+
+            // Pull from public KVDB cloud if collaborative channel is enabled
+            if (cloudChannel) {
+                try {
+                    const res = await fetch(CLOUD_URL_BASE + cloudChannel);
+                    if (res.ok) {
+                        const cloudData = await res.json();
+                        if (cloudData && cloudData.days && cloudData.days.length > 0) {
+                            currentData = cloudData;
+                            localStorage.setItem('travel_itinerary_data_v1', JSON.stringify(currentData));
+                            console.log("🟢 成功自公网云端协同信道同步了最新的旅行日程！");
+                            renderAll();
+                            return;
+                        }
+                    } else if (res.status === 404) {
+                        console.log("☁️ 检测到该云端协同通道尚未被使用！正将当前本地计划初始化存入该信道...");
+                        const saved = localStorage.getItem('travel_itinerary_data_v1');
+                        if (saved) {
+                            currentData = JSON.parse(saved);
+                        } else {
+                            currentData = JSON.parse(JSON.stringify(defaultData));
+                        }
+                        await uploadToCloud();
+                        renderAll();
+                        return;
+                    }
+                } catch (e) {
+                    console.error("☁️ 连接云端协同信道失败，将使用本地离线存储作为备用方案: ", e);
+                }
+            }
+
+            // Fallback: Try loading from server API if it's served by our python server
+            try {
+                const response = await fetch('/api/data');
+                if (response.ok) {
+                    const serverData = await response.json();
+                    if (serverData && serverData.days && serverData.days.length > 0) {
+                        currentData = serverData;
+                        console.log("成功自本地局域网服务端同步了最新的行程数据！");
+                        // Migrate in case server has incomplete schema
+                        if (currentData.startDate === undefined) {
+                            currentData.startDate = "";
+                        }
+                        currentData.days.forEach((day, index) => {
+                            if (day.customDate === undefined) {
+                                day.customDate = "";
+                            }
+                        });
+                        localStorage.setItem('travel_itinerary_data_v1', JSON.stringify(currentData));
+                        renderAll();
+                        return; // Found server data! Skip localstorage fallback
+                    }
+                }
+            } catch (e) {
+                console.log("未检测到局域网协同存储服务端。", e);
+            }
+
+            const saved = localStorage.getItem('travel_itinerary_data_v1');
+            if (saved) {
+                try {
+                    currentData = JSON.parse(saved);
+                    // Migration for startDate, customDates, accommodation, and flights
+                    if (currentData.startDate === undefined) {
+                        currentData.startDate = "";
+                    }
+                    currentData.days.forEach((day, index) => {
+                        if (day.customDate === undefined) {
+                            day.customDate = "";
+                        }
+                        if (day.accommodation === undefined || day.accommodation === "巴黎" || day.accommodation === "尼斯" || day.accommodation === "佛罗伦萨" || day.accommodation === "威尼斯" || day.accommodation === "罗马" || day.accommodation === "飞机上 (或温馨的家)") {
+                            const origDay = defaultData.days[index];
+                            day.accommodation = origDay ? origDay.accommodation : "";
+                        }
+                        if (day.flight === undefined || day.flight.includes("AF111") || day.flight.includes("CA940")) {
+                            const origDay = defaultData.days[index];
+                            day.flight = (origDay && origDay.flight) ? origDay.flight : "";
+                            // Migrate activities if they are still original templates
+                            if (index === 0 && day.activities && day.activities[0] && day.activities[0].detail.includes("搭乘班机抵达巴黎")) {
+                                day.activities = JSON.parse(JSON.stringify(origDay.activities));
+                            } else if (index === currentData.days.length - 1 && day.activities && day.activities[day.activities.length - 1] && day.activities[day.activities.length - 1].detail.includes("收拾行囊")) {
+                                day.activities = JSON.parse(JSON.stringify(origDay.activities));
+                            }
+                        }
+                    });
+                } catch(e) {
+                    console.error("加载本地数据失败，正恢复默认值", e);
+                    currentData = JSON.parse(JSON.stringify(defaultData));
+                }
+            } else {
+                currentData = JSON.parse(JSON.stringify(defaultData));
+            }
+            saveToLocalStorage();
+            renderAll();
+        }
+
+        // Upload local state asynchronously to KVDB cloud
+        async function uploadToCloud() {
+            if (!cloudChannel || !currentData) return;
+            try {
+                const response = await fetch(CLOUD_URL_BASE + cloudChannel, {
+                    method: 'POST',
+                    body: JSON.stringify(currentData),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                if (response.ok) {
+                    console.log("☁️ 团队公网云同步备份成功！");
+                }
+            } catch (e) {
+                console.error("☁️ 推送同步至云存储异常: ", e);
+            }
+        }
+
+        // Save to LocalStorage and server if present
+        function saveToLocalStorage() {
+            localStorage.setItem('travel_itinerary_data_v1', JSON.stringify(currentData));
+            
+            if (cloudChannel) {
+                uploadToCloud();
+            } else {
+                // Async background update to Local native host Server if present
+                fetch('/api/data', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(currentData)
+                }).catch(err => {});
+            }
+        }
+
+        // Reset Data
+        function resetData(confirmUser = false) {
+            if (confirmUser) {
+                if (!confirm("确定要恢复默认行程吗？这将会清空您之前作出的所有修改！")) {
+                    return;
+                }
+            }
+            currentData = JSON.parse(JSON.stringify(defaultData));
+            saveToLocalStorage();
+            renderAll();
+        }
+
+        // Export To JSON file
+        function exportJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentData, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "法意10日游-自定义旅游行程_备份.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        // Generate dynamic compressed share link suitable for static environments like GitHub Pages
+        function generateShareLink() {
+            try {
+                if (!currentData) return;
+                const compressed = LZString.compressToEncodedURIComponent(JSON.stringify(currentData));
+                const shareUrl = `${window.location.origin}${window.location.pathname}?d=${compressed}`;
+                
+                // Copy to clipboard
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    alert("🔗 外网分享链接生成成功！\n\n链接已自动复制到您的剪贴板。您可以直接把剪贴板中的链接发送给家人或朋友，对方在手机/电脑浏览器中点开即可直接看到您当前修改后的全新结果！");
+                }).catch(err => {
+                    // Fallback for browsers blocked clipboard write
+                    prompt("🔗 分享链接已生成，请手动复制以下文本框中的链接并发给朋友：", shareUrl);
+                });
+            } catch (e) {
+                alert("生成分享链接失败：" + e.message);
+            }
+        }
+
+        // Import From JSON File
+        function importJSON(event) {
+            const input = event.target;
+            if (!input.files || input.files.length === 0) return;
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onload = function() {
+                try {
+                    const imported = JSON.parse(reader.result);
+                    if (imported.tips && Array.isArray(imported.tips) && imported.days && Array.isArray(imported.days)) {
+                        currentData = imported;
+                        saveToLocalStorage();
+                        renderAll();
+                        alert("🎉 行程导入成功！已经更新到您的主页！");
+                    } else {
+                        alert("⚠️ 错误：文件格式似乎不正确，必须带有完整的提醒列表 and 天数日程。");
+                    }
+                } catch (e) {
+                    alert("⚠️ 导入失败：读取的文件并不是有效的 JSON。详情: " + e.message);
+                }
+            };
+            reader.readAsText(file);
+            input.value = ''; // Reset file input
+        }
+
+        // --- Cloud Real-time Collaboration Engine UI Rendering and Control Functions ---
+
+        function renderCloudSyncCard() {
+            const container = document.getElementById('cloud-sync-card');
+            if (!container) return;
+
+            if (!cloudChannel) {
+                container.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-2.5">
+                            <span class="flex h-2 w-2 relative">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gray-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-gray-500"></span>
+                            </span>
+                            <h4 class="font-extrabold text-gray-800 text-sm tracking-wide uppercase flex items-center gap-1.5">
+                                <i class="fa-solid fa-cloud text-gray-400 text-sm"></i> 公网多人同时协同
+                            </h4>
+                        </div>
+                        <p class="text-[12px] text-gray-500 leading-relaxed">
+                            希望和其他人<b>同时修改和查看同一份日程</b>？输入一个自定的协同通道码即可连接公网云端数据库！
+                        </p>
+                        <div class="space-y-2">
+                            <input type="text" id="cloud-channel-input" placeholder="通道协同码 (例如: fayi2026)" class="w-full px-3.5 py-2 border border-gray-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-semibold" onkeyup="if(event.key==='Enter') joinCloudChannel()">
+                            <button onclick="joinCloudChannel()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-2 rounded-lg shadow-sm hover:shadow transition duration-200 flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-cloud-arrow-up"></i> 开启公网多人实时协同
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                const currentUrl = `${window.location.origin}${window.location.pathname}?code=${cloudChannel}`;
+                container.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between border-b border-gray-100 pb-2.5">
+                            <div class="flex items-center gap-2">
+                                <span class="flex h-2.5 w-2.5 relative">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                                </span>
+                                <h4 class="font-extrabold text-gray-900 text-sm tracking-wider flex items-center gap-1.5">
+                                    公网多人协同在线
+                                </h4>
+                            </div>
+                            <button onclick="leaveCloudChannel()" class="text-[10px] text-red-500 hover:text-red-700 hover:underline font-bold transition">
+                                <i class="fa-solid fa-right-from-bracket"></i> 退出云端
+                            </button>
+                        </div>
+                        
+                        <div class="bg-indigo-50/50 rounded-xl p-2.5 border border-indigo-100/30 space-y-1">
+                            <span class="text-[9px] text-indigo-400 font-bold uppercase tracking-wider block">共享协同通道码</span>
+                            <span class="text-xs font-black text-indigo-700 font-mono block select-all"><i class="fa-solid fa-key text-[10px] mr-1"></i>${cloudChannel}</span>
+                        </div>
+
+                        <p class="text-[11px] text-emerald-800 leading-relaxed bg-emerald-50/70 p-2.5 rounded-xl border border-emerald-100/40">
+                            <b>多人实时生效：</b> 任何人修改，云端会秒级合并。其他人访问下面的专属链接刷新即呈现最新内容！
+                        </p>
+
+                        <div class="space-y-2">
+                            <span class="text-[10px] font-bold text-gray-400 block mb-1">专属云协同网址（发给家人）：</span>
+                            <div class="flex gap-1.5">
+                                <input type="text" readonly value="${currentUrl}" class="flex-1 px-3 py-1.5 border border-gray-200 rounded-lg text-[10px] font-mono outline-none bg-gray-50 select-all" id="cloud-share-url">
+                                <button onclick="copyCloudLink()" class="px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-lg transition duration-200 shrink-0">
+                                    复制
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 pt-1 border-t border-gray-100">
+                            <button onclick="syncPull()" class="border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold text-[10px] py-1.5 rounded-lg transition flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-cloud-arrow-down"></i> 手动云拉取
+                            </button>
+                            <button onclick="syncPush()" class="border border-indigo-100 text-indigo-600 hover:bg-indigo-50 font-bold text-[10px] py-1.5 rounded-lg transition flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-cloud-arrow-up"></i> 强制推云端
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        async function joinCloudChannel() {
+            let codeVal = document.getElementById('cloud-channel-input')?.value || '';
+            codeVal = codeVal.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '');
+            if (!codeVal) {
+                alert("请输入合法的英文/数字协同码，以便家人加入同一个频道。");
+                return;
+            }
+            cloudChannel = codeVal;
+            localStorage.setItem('cloud_channel_code', cloudChannel);
+            
+            alert(`⚡️ 已成功开启协同！通道码: "${cloudChannel}"\n正在拉取该通道的最领先版旅行日程...`);
+            
+            // Set URL search parameter cleanly without full page refresh
+            const newUrl = `${window.location.origin}${window.location.pathname}?code=${cloudChannel}`;
+            window.history.replaceState({}, document.title, newUrl);
+
+            // Fetch state from KVDB cloud datastore
+            try {
+                const res = await fetch(CLOUD_URL_BASE + cloudChannel);
+                if (res.ok) {
+                    const cloudData = await res.json();
+                    if (cloudData && cloudData.days && cloudData.days.length > 0) {
+                        currentData = cloudData;
+                    }
+                } else {
+                    // Seed the cloud with user's current data if channel is empty
+                    await uploadToCloud();
+                }
+            } catch (e) {
+                console.error(e);
+            }
+            
+            saveToLocalStorage();
+            renderAll();
+        }
+
+        function leaveCloudChannel() {
+            if (!confirm("确定要退出公网协同模式吗？您的网页将切回单机储存。")) return;
+            cloudChannel = '';
+            localStorage.removeItem('cloud_channel_code');
+            
+            const newUrl = `${window.location.origin}${window.location.pathname}`;
+            window.history.replaceState({}, document.title, newUrl);
+            
+            alert("已成功退出。所有的对日程的修改将变成仅您本地可见。");
+            renderAll();
+        }
+
+        function copyCloudLink() {
+            const shareUrl = document.getElementById('cloud-share-url');
+            if (shareUrl) {
+                shareUrl.select();
+                navigator.clipboard.writeText(shareUrl.value).then(() => {
+                    alert("🔗 全家公网协同专属链接已复制到您的剪贴板！\n\n可以发在微信里，其他人只要点开这个链接，就会自动连入同一个云通道，所有人做出的修改都将自动互通！");
+                }).catch(() => {
+                    alert("复制失败，请手动选择全部并复制通道链接。");
+                });
+            }
+        }
+
+        async function syncPull() {
+            if (!cloudChannel) return;
+            try {
+                const res = await fetch(CLOUD_URL_BASE + cloudChannel);
+                if (res.ok) {
+                    const cloudData = await res.json();
+                    if (cloudData && cloudData.days && cloudData.days.length > 0) {
+                        currentData = cloudData;
+                        saveToLocalStorage();
+                        renderAll();
+                        alert("📥 成功从云端重新拉取并且同步！您的日程版本已被更新。");
+                        return;
+                    }
+                }
+                alert("云端通道尚未存储该日程，已为您重新写入。");
+            } catch (e) {
+                alert("拉取失败: " + e.message);
+            }
+        }
+
+        async function syncPush() {
+            if (!cloudChannel) return;
+            if (!confirm("⚠️ 注意：强制推送将会用您当前的屏幕日程，强行【覆盖】云端的所有细节！")) return;
+            try {
+                await uploadToCloud();
+                alert("📤 强行覆盖推送成功！其他伙伴只要点击刷新或通过自动更新就会变成您的版本。");
+            } catch (e) {
+                alert("推送失败: " + e.message);
+            }
+        }
+
+        // Auto Poll Clock (every 8 seconds, only runs when not mid-editing)
+        setInterval(async () => {
+            if (!cloudChannel || isEditingAny()) return;
+            try {
+                const res = await fetch(CLOUD_URL_BASE + cloudChannel);
+                if (res.ok) {
+                    const cloudData = await res.json();
+                    if (cloudData && cloudData.days && cloudData.days.length > 0) {
+                        const localStr = localStorage.getItem('travel_itinerary_data_v1');
+                        const cloudStr = JSON.stringify(cloudData);
+                        if (localStr !== cloudStr) {
+                            currentData = cloudData;
+                            localStorage.setItem('travel_itinerary_data_v1', cloudStr);
+                            console.log("🔄 侦测到家庭组其他成员对行程作出了修改！正在自动刷新渲染最新日程...");
+                            renderAll();
+                        }
+                    }
+                }
+            } catch (e) {
+                // Background quiet fail
+            }
+        }, 8000);
+
+        function isEditingAny() {
+            const modal = document.getElementById('edit-modal');
+            const tipsModal = document.getElementById('tips-modal');
+            const isEditingDay = modal && !modal.classList.contains('hidden');
+            const isEditingTips = tipsModal && !tipsModal.classList.contains('hidden');
+            return isEditingDay || isEditingTips;
+        }
+
+        // Update travel start date
+        function updateStartDate(val) {
+            if (!currentData) return;
+            currentData.startDate = val;
+            saveToLocalStorage();
+            renderAll();
+        }
+
+        // Calculate and format date for each day card
+        function getFormattedDate(day, index) {
+            let dateStr = "";
+            let isCustom = false;
+            
+            if (day.customDate) {
+                dateStr = day.customDate;
+                isCustom = true;
+            } else if (currentData && currentData.startDate) {
+                const date = new Date(currentData.startDate + 'T00:00:00'); // Iso string to keep stable local timezone
+                date.setDate(date.getDate() + index);
+                const yyyy = date.getFullYear();
+                const mm = String(date.getMonth() + 1).padStart(2, '0');
+                const dd = String(date.getDate()).padStart(2, '0');
+                dateStr = `${yyyy}-${mm}-${dd}`;
+            }
+
+            if (!dateStr) return '';
+
+            try {
+                const dateObj = new Date(dateStr + 'T00:00:00');
+                if (isNaN(dateObj.getTime())) return '';
+                const yyyy = dateObj.getFullYear();
+                const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const dd = String(dateObj.getDate()).padStart(2, '0');
+                const daysOfWeek = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+                const dayName = daysOfWeek[dateObj.getDay()];
+                
+                return `
+                    <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 text-[11px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-200/40">
+                        <i class="fa-regular fa-calendar-check"></i> ${yyyy}年${mm}月${dd}日 ${dayName} ${isCustom ? '<span class="text-[9px] bg-emerald-200 text-emerald-900 px-1 rounded ml-1">自定</span>' : ''}
+                    </span>
+                `;
+            } catch (e) {
+                return '';
+            }
+        }
+
+        // Calculate and format small date for navigation tab
+        function getShortDateStr(day, index) {
+            let dateStr = "";
+            if (day.customDate) {
+                dateStr = day.customDate;
+            } else if (currentData && currentData.startDate) {
+                const date = new Date(currentData.startDate + 'T00:00:00');
+                date.setDate(date.getDate() + index);
+                const yyyy = date.getFullYear();
+                const mm = String(date.getMonth() + 1).padStart(2, '0');
+                const dd = String(date.getDate()).padStart(2, '0');
+                dateStr = `${yyyy}-${mm}-${dd}`;
+            }
+
+            if (!dateStr) return '';
+
+            try {
+                const dateObj = new Date(dateStr + 'T00:00:00');
+                if (isNaN(dateObj.getTime())) return '';
+                const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const dd = String(dateObj.getDate()).padStart(2, '0');
+                return `${mm}-${dd}`;
+            } catch (e) {
+                return '';
+            }
+        }
+
+        // Render All UI Component
+        function renderAll() {
+            renderTips();
+            renderNav();
+            renderTimeline();
+            renderCloudSyncCard();
+            
+            // Set Start Date input value
+            const dateInput = document.getElementById('tour-start-date');
+            if (dateInput) {
+                dateInput.value = currentData.startDate || "";
+            }
+        }
+
+        // Render Tips
+        function renderTips() {
+            const container = document.getElementById('tips-container');
+            container.innerHTML = '';
+            
+            if (currentData.tips.length === 0) {
+                container.innerHTML = '<p class="text-xs italic text-amber-600">暂无行前提醒</p>';
+                return;
+            }
+
+            currentData.tips.forEach((tip, idx) => {
+                const li = document.createElement('div');
+                li.className = "flex items-start gap-2.5";
+                li.innerHTML = `
+                    <span class="text-amber-500 font-bold shrink-0 mt-0.5">•</span>
+                    <p class="text-[13px] text-amber-950/80 leading-relaxed">${escapeHtml(tip)}</p>
+                `;
+                container.appendChild(li);
+            });
+        }
+
+        // Render Top Navigator
+        function renderNav() {
+            const container = document.getElementById('day-nav-container');
+            container.innerHTML = '';
+            
+            currentData.days.forEach((day, index) => {
+                const btn = document.createElement('button');
+                btn.id = `nav-btn-${index}`;
+                btn.className = "nav-btn shrink-0 px-2.5 py-1 rounded-xl text-xs font-semibold bg-gray-50 hover:bg-gray-100 border border-gray-200/50 text-gray-600 hover:text-gray-900 transition duration-200 flex flex-col items-center justify-center min-w-[56px] h-[44px]";
+                
+                const dayLabel = day.dayNum || `D${index+1}`;
+                const dateLabel = getShortDateStr(day, index);
+                
+                btn.innerHTML = `
+                    <span class="text-xs font-bold leading-none">${dayLabel}</span>
+                    <span class="text-[9px] opacity-75 font-medium leading-none mt-1">${dateLabel}</span>
+                `;
+                btn.onclick = () => scrollToDay(index);
+                container.appendChild(btn);
+            });
+        }
+
+        // Render Timeline Days Card
+        function renderTimeline() {
+            const container = document.getElementById('days-container');
+            container.innerHTML = '';
+
+            currentData.days.forEach((day, index) => {
+                const isFirstOfPhase = index === 0 || currentData.days[index - 1].phase !== day.phase;
+                
+                let phaseHeader = '';
+                if (isFirstOfPhase && day.phase) {
+                    phaseHeader = `
+                        <div class="pt-8 pb-4">
+                            <span class="bg-amber-100/80 text-amber-800 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full border border-amber-200">
+                                <i class="fa-solid fa-map-location-dot"></i> ${escapeHtml(day.phase)}
+                            </span>
+                        </div>
+                    `;
+                }
+
+                let transportBadge = '';
+                if (day.transport) {
+                    transportBadge = `
+                        <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-800 text-xs px-3 py-1 rounded-full border border-blue-100">
+                            <i class="fa-solid fa-train"></i>
+                            <span class="font-bold">${escapeHtml(day.transport)}</span>
+                            ${day.duration ? `<span class="opacity-60">|</span> <span class="font-medium">${escapeHtml(day.duration)}</span>` : ''}
+                        </div>
+                    `;
+                }
+
+                let flightBadge = '';
+                if (day.flight) {
+                    flightBadge = `
+                        <div class="inline-flex items-center gap-2 bg-rose-50 text-rose-800 text-xs px-3 py-1 rounded-full border border-rose-100">
+                            <i class="fa-solid fa-plane"></i>
+                            <span class="font-bold">航班：${escapeHtml(day.flight)}</span>
+                        </div>
+                    `;
+                }
+
+                // Render activities
+                let activitiesHtml = '';
+                if (day.activities && day.activities.length > 0) {
+                    activitiesHtml = `
+                        <div class="space-y-4 border-l-2 border-gray-100 pl-4 md:pl-6 ml-3 md:ml-4 py-2">
+                            ${day.activities.map(act => `
+                                <div class="relative group">
+                                    <div class="absolute -left-[23px] md:-left-[31px] top-1 w-3 h-3 rounded-full bg-amber-400 border border-white group-hover:scale-125 transition"></div>
+                                    <span class="inline-block text-[10px] md:text-sm font-bold text-gray-400 bg-gray-50 px-2 py-0.5 rounded border border-gray-100 mb-1.5 uppercase tracking-wider">${escapeHtml(act.time)}</span>
+                                    <p class="text-xs md:text-sm text-gray-700 leading-relaxed font-light">${escapeHtml(act.detail)}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                } else {
+                    activitiesHtml = `
+                        <div class="text-xs italic text-gray-400 pl-4">该日行程尚待安排，点击右上方 [修改日程] 开始添加活动。</div>
+                    `;
+                }
+
+                const card = document.createElement('div');
+                card.id = `day-card-${index}`;
+                card.className = "day-card bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition duration-300 relative group";
+                card.innerHTML = `
+                    ${phaseHeader}
+                    <div class="flex items-start justify-between mb-4 border-b border-gray-50 pb-3">
+                        <div>
+                            <div class="flex items-center gap-2.5 flex-wrap">
+                                <span class="text-xl md:text-2xl font-black text-amber-500 serif-title">${escapeHtml(day.dayNum || `Day ${index + 1}`)}</span>
+                                <span class="h-4 w-px bg-gray-300"></span>
+                                <h3 class="text-base md:text-lg font-bold text-gray-800 mr-2">${escapeHtml(day.title || '自由活动 / 自行安排')}</h3>
+                                ${getFormattedDate(day, index)}
+                                ${day.accommodation ? `
+                                    <span class="inline-flex items-center gap-1.5 bg-indigo-50 text-indigo-800 text-[11px] font-bold px-2.5 py-0.5 rounded-full border border-indigo-200/40">
+                                        <i class="fa-solid fa-hotel text-indigo-500"></i> 住宿：${escapeHtml(day.accommodation)}
+                                    </span>
+                                ` : ''}
+                            </div>
+                            <div class="mt-2 flex flex-wrap gap-2">
+                                ${transportBadge}
+                                ${flightBadge}
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button onclick="openEditModal(${index})" class="text-xs md:text-sm bg-gray-50 hover:bg-amber-50 text-gray-600 hover:text-amber-700 px-3 py-1.5 rounded-lg border border-gray-200 hover:border-amber-200 transition duration-200 flex items-center gap-1 font-medium">
+                                <i class="fa-solid fa-pen-to-square"></i> <span class="hidden md:inline">修改日程</span>
+                            </button>
+                            <button onclick="deleteDay(${index})" class="text-gray-400 hover:text-rose-600 p-1 rounded-lg hover:bg-rose-50 transition" title="删除当前天数">
+                                <i class="fa-solid fa-trash-can text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                    ${activitiesHtml}
+                `;
+
+                container.appendChild(card);
+            });
+
+            // Add Day Button
+            const addBtnDiv = document.createElement('div');
+            addBtnDiv.className = "pt-2";
+            addBtnDiv.innerHTML = `
+                <button onclick="createNewDay()" class="w-full border-2 border-dashed border-gray-200 hover:border-amber-400 text-gray-500 hover:text-amber-700 bg-white/50 hover:bg-amber-50/20 py-5 rounded-2xl transition duration-300 flex items-center justify-center gap-2 font-bold mb-10">
+                    <i class="fa-solid fa-calendar-plus text-lg"></i> + 添加下一个行程天数
+                </button>
+            `;
+            container.appendChild(addBtnDiv);
+        }
+
+        // View Day Navigation Scrolls
+        function scrollToDay(index) {
+            const inactiveClass = "nav-btn shrink-0 px-2.5 py-1 rounded-xl text-xs font-semibold bg-gray-50 hover:bg-gray-100 border border-gray-200/50 text-gray-600 hover:text-gray-900 transition duration-200 flex flex-col items-center justify-center min-w-[56px] h-[44px]";
+            const activeClass = "nav-btn active shrink-0 px-2.5 py-1 rounded-xl text-white bg-gray-900 shadow-sm border border-transparent transition duration-200 flex flex-col items-center justify-center min-w-[56px] h-[44px]";
+
+            // Remove active classes
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = inactiveClass;
+            });
+
+            if (index === 'all') {
+                document.getElementById('nav-btn-all').className = activeClass;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+
+            const btn = document.getElementById(`nav-btn-${index}`);
+            if (btn) {
+                btn.className = activeClass;
+            }
+
+            const element = document.getElementById(`day-card-${index}`);
+            if (element) {
+                const headerOffset = 100;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Day Edit Modal Core Operations
+        function openEditModal(index) {
+            const day = currentData.days[index];
+            document.getElementById('edit-day-index').value = index;
+            document.getElementById('edit-day-num').value = day.dayNum || '';
+            document.getElementById('edit-day-title').value = day.title || '';
+            document.getElementById('edit-day-phase').value = day.phase || '';
+            document.getElementById('edit-day-custom-date').value = day.customDate || '';
+            document.getElementById('edit-day-transport').value = day.transport || '';
+            document.getElementById('edit-day-duration').value = day.duration || '';
+            document.getElementById('edit-day-accommodation').value = day.accommodation || '';
+            document.getElementById('edit-day-flight').value = day.flight || '';
+
+            const activitiesContainer = document.getElementById('edit-activities-container');
+            activitiesContainer.innerHTML = '';
+
+            if (day.activities && day.activities.length > 0) {
+                day.activities.forEach(act => addEditActivity(act.time, act.detail));
+            } else {
+                addEditActivity();
+            }
+
+            document.getElementById('edit-modal').classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function addEditActivity(time = '', detail = '') {
+            const container = document.getElementById('edit-activities-container');
+            const div = document.createElement('div');
+            div.className = "activity-edit-row flex gap-2 items-center bg-gray-50 border border-gray-100 rounded-lg p-2 relative group";
+            div.innerHTML = `
+                <input type="text" class="act-time px-2 py-1 bg-white border border-gray-200 rounded text-xs font-bold w-20 text-center uppercase" placeholder="上午" value="${escapeHtml(time)}">
+                <input type="text" class="act-detail px-3 py-1 bg-white border border-gray-200 rounded text-xs flex-1" placeholder="具体的景点/行程细节/餐厅/路线建议..." value="${escapeHtml(detail)}">
+                <button type="button" onclick="this.parentElement.remove()" class="text-gray-300 hover:text-red-500 focus:outline-none px-1">
+                    <i class="fa-solid fa-circle-minus"></i>
+                </button>
+            `;
+            container.appendChild(div);
+        }
+
+        function saveDayChanges() {
+            const index = parseInt(document.getElementById('edit-day-index').value);
+            const dayNum = document.getElementById('edit-day-num').value.trim();
+            const title = document.getElementById('edit-day-title').value.trim();
+            const phase = document.getElementById('edit-day-phase').value.trim();
+            const customDate = document.getElementById('edit-day-custom-date').value;
+            const transport = document.getElementById('edit-day-transport').value.trim();
+            const duration = document.getElementById('edit-day-duration').value.trim();
+            const accommodation = document.getElementById('edit-day-accommodation').value.trim();
+            const flight = document.getElementById('edit-day-flight').value.trim();
+
+            const actRows = document.querySelectorAll('#edit-activities-container .activity-edit-row');
+            const activities = [];
+            actRows.forEach(row => {
+                const time = row.querySelector('.act-time').value.trim();
+                const detail = row.querySelector('.act-detail').value.trim();
+                if (time || detail) {
+                    activities.push({ time, detail });
+                }
+            });
+
+            currentData.days[index] = {
+                dayNum,
+                title,
+                phase,
+                customDate,
+                transport,
+                duration,
+                accommodation,
+                flight,
+                activities
+            };
+
+            saveToLocalStorage();
+            renderAll();
+            closeModal();
+        }
+
+        function createNewDay() {
+            const index = currentData.days.length;
+            const nextDayNum = `Day ${index + 1}`;
+            const lastDay = currentData.days[index - 1] || {};
+            
+            const newDay = {
+                dayNum: nextDayNum,
+                title: "自由度极高的全新日程",
+                phase: lastDay.phase || "全新旅游阶段",
+                transport: "",
+                duration: "",
+                accommodation: lastDay.accommodation || "",
+                flight: "",
+                activities: [
+                    { time: "上午", detail: "写下早上的精彩探索计划" },
+                    { time: "下午", detail: "写下中下午的景点、餐厅或探店推荐" }
+                ]
+            };
+
+            currentData.days.push(newDay);
+            saveToLocalStorage();
+            renderAll();
+            setTimeout(() => {
+                scrollToDay(index);
+                openEditModal(index);
+            }, 300);
+        }
+
+        function deleteDay(index) {
+            const day = currentData.days[index];
+            if (confirm(`确定要彻底删除 ${day.dayNum || '该天'} 的全部行程日程吗？该操作不可撤销。`)) {
+                currentData.days.splice(index, 1);
+                // Auto normalize Day numbers if user wants
+                currentData.days.forEach((d, idx) => {
+                    if (d.dayNum.match(/^Day \d+$/i)) {
+                        d.dayNum = `Day ${idx + 1}`;
+                    }
+                });
+                saveToLocalStorage();
+                renderAll();
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('edit-modal').classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        // Tips Edit Core Operations
+        function openTipsModal() {
+            const container = document.getElementById('edit-tips-container');
+            container.innerHTML = '';
+            
+            currentData.tips.forEach(tip => addEditTip(tip));
+            
+            if (currentData.tips.length === 0) {
+                addEditTip('');
+            }
+
+            document.getElementById('tips-modal').classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function addEditTip(val = '') {
+            const container = document.getElementById('edit-tips-container');
+            const div = document.createElement('div');
+            div.className = "tip-edit-row flex gap-2 items-center bg-gray-50 border border-gray-100 rounded-lg p-2";
+            div.innerHTML = `
+                <input type="text" class="tip-input px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-xs flex-1 outline-none focus:ring-1 focus:ring-amber-500" placeholder="添加一行重点行前建议..." value="${escapeHtml(val)}">
+                <button type="button" onclick="this.parentElement.remove()" class="text-gray-300 hover:text-red-500 px-1">
+                    <i class="fa-solid fa-circle-minus"></i>
+                </button>
+            `;
+            container.appendChild(div);
+        }
+
+        function saveTipsChanges() {
+            const inputs = document.querySelectorAll('#edit-tips-container .tip-input');
+            const tips = [];
+            inputs.forEach(input => {
+                const val = input.value.trim();
+                if (val) tips.push(val);
+            });
+
+            currentData.tips = tips;
+            saveToLocalStorage();
+            renderAll();
+            closeTipsModal();
+        }
+
+        function closeTipsModal() {
+            document.getElementById('tips-modal').classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        // HTML Escape Helper
+        function escapeHtml(text) {
+            if (!text) return '';
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.toString().replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        // Initialize on load
+        window.onload = initData;
+    </script>
+</body>
+</html>
