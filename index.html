@@ -239,6 +239,32 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">交通班次 / 车次 / 航班号 (可选或下拉选择)</label>
+                        <input type="text" id="edit-day-transport-no" list="transport-no-suggestions" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-xs" placeholder="例: TGV9269 / MU569 (可输入或下拉选择)">
+                        <datalist id="transport-no-suggestions">
+                            <option value="TGV 9269">
+                            <option value="TGV 6171">
+                            <option value="TGV 6173">
+                            <option value="TGV 6175">
+                            <option value="FR 9611">
+                            <option value="FR 9615">
+                            <option value="FR 9623">
+                            <option value="Italo 9923">
+                            <option value="Italo 9931">
+                            <option value="MU569">
+                            <option value="CA833">
+                            <option value="LH1021">
+                            <option value="AF112">
+                        </datalist>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">停留/乘车大约时长（可选）</label>
+                        <input type="text" id="edit-day-duration" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-xs" placeholder="例如: 5.5小时 / 45分钟">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
                         <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">出发时间（时刻）</label>
                         <input type="time" id="edit-day-transport-dep-time" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-xs">
                     </div>
@@ -248,14 +274,10 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">停留/乘车大约时长（可选）</label>
-                        <input type="text" id="edit-day-duration" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-xs" placeholder="例如: 5.5小时 / 45分钟">
-                    </div>
+                <div class="grid grid-cols-1 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">特定客房住宿 / 推荐酒店</label>
-                        <input type="text" id="edit-day-accommodation" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-xs" placeholder="例: 巴黎中心埃菲尔铁塔美居酒店">
+                        <input type="text" id="edit-day-accommodation" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-xs" placeholder="例: 巴黎中心埃菲尔铁塔美居酒店 (Mercure Paris Centre Tour Eiffel)">
                     </div>
                 </div>
 
@@ -1134,10 +1156,13 @@
                         iconClass = 'fa-solid fa-ship';
                     }
 
+                    const transNoPart = day.transportNo ? ` ${day.transportNo}` : '';
                     if (day.depCity && day.arrCity) {
-                        transText = `${transType}: ${day.depCity} ➔ ${day.arrCity}`;
+                        transText = `${transType}${transNoPart}: ${day.depCity} ➔ ${day.arrCity}`;
                     } else if (day.depCity || day.arrCity) {
-                        transText = `${transType}: ${day.depCity || day.arrCity}`;
+                        transText = `${transType}${transNoPart}: ${day.depCity || day.arrCity}`;
+                    } else if (day.transportNo) {
+                        transText = `${transType}${transNoPart}`;
                     } else {
                         transText = day.transport;
                     }
@@ -1284,6 +1309,7 @@
             document.getElementById('edit-day-transport-to').value = day.arrCity || '';
             document.getElementById('edit-day-transport-dep-time').value = day.depTime || '';
             document.getElementById('edit-day-transport-arr-time').value = day.arrTime || '';
+            document.getElementById('edit-day-transport-no').value = day.transportNo || '';
 
             document.getElementById('edit-day-duration').value = day.duration || '';
             document.getElementById('edit-day-accommodation').value = day.accommodation || '';
@@ -1329,6 +1355,7 @@
             const arrCity = document.getElementById('edit-day-transport-to').value.trim();
             const depTime = document.getElementById('edit-day-transport-dep-time').value.trim();
             const arrTime = document.getElementById('edit-day-transport-arr-time').value.trim();
+            const transportNo = document.getElementById('edit-day-transport-no').value.trim();
 
             const duration = document.getElementById('edit-day-duration').value.trim();
             const accommodation = document.getElementById('edit-day-accommodation').value.trim();
@@ -1346,10 +1373,13 @@
 
             // Derive legacy transport compatibility for safety
             let legacyTransport = transportType;
+            const transNoPart = transportNo ? ` ${transportNo}` : '';
             if (depCity && arrCity) {
-                legacyTransport = `${transportType ? transportType + ': ' : ''}${depCity} ➔ ${arrCity}`;
+                legacyTransport = `${transportType ? transportType + transNoPart + ': ' : ''}${depCity} ➔ ${arrCity}`;
             } else if (depCity || arrCity) {
-                legacyTransport = `${transportType ? transportType + ': ' : ''}${depCity || arrCity}`;
+                legacyTransport = `${transportType ? transportType + transNoPart + ': ' : ''}${depCity || arrCity}`;
+            } else if (transportNo) {
+                legacyTransport = `${transportType ? transportType + ' ' : ''}${transportNo}`;
             }
 
             currentData.days[index] = {
@@ -1363,6 +1393,7 @@
                 arrCity,
                 depTime,
                 arrTime,
+                transportNo,
                 duration,
                 accommodation,
                 flight,
@@ -1384,6 +1415,12 @@
                 title: "自由度极高的全新日程",
                 phase: lastDay.phase || "全新旅游阶段",
                 transport: "",
+                transportType: "",
+                depCity: "",
+                arrCity: "",
+                depTime: "",
+                arrTime: "",
+                transportNo: "",
                 duration: "",
                 accommodation: lastDay.accommodation || "",
                 flight: "",
