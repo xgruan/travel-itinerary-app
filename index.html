@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>法意纵贯 · 文艺复兴之路 - 10日旅游行程</title>
+    <title>法意纵贯 · 文艺复兴之路 - 11日华丽自游行</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- LZ-String for Link Sharing Compression -->
@@ -42,7 +42,7 @@
     <header class="relative bg-cover bg-center h-[400px]" style="background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1950&q=80');">
         <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
             <span class="text-amber-400 font-semibold tracking-widest text-xs md:text-sm uppercase mb-2 bg-black/30 px-3 py-1 rounded-full backdrop-blur-sm">
-                <i class="fa-solid fa-compass spin mr-1"></i> 10日欧陆漫游全计划
+                <i class="fa-solid fa-compass spin mr-1"></i> 11日欧陆漫游全计划
             </span>
             <h1 class="serif-title text-white text-3xl md:text-5xl lg:text-6xl font-bold tracking-wide drop-shadow-lg mb-3">
                 法意纵贯 · 文艺复兴之路
@@ -85,7 +85,7 @@
                             <span class="w-8 h-8 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-calendar-days"></i></span>
                             <div>
                                 <p class="font-bold text-gray-800">总天数</p>
-                                <p>10天 (跨越 2 个国家)</p>
+                                <p id="total-days-panel-txt">11天 (跨越 2 个国家)</p>
                             </div>
                         </li>
                         <li class="flex items-center">
@@ -181,9 +181,9 @@
                 </div>
             </div>
 
-            <h3 class="serif-title text-white text-xl font-bold tracking-wider pt-4">法意纵贯 · 文艺复兴之路 10日全计划</h3>
+            <h3 class="serif-title text-white text-xl font-bold tracking-wider pt-4">法意纵贯 · 文艺复兴之路 11日全计划</h3>
             <p class="text-sm max-w-md mx-auto leading-relaxed">
-                完美的法国与意大利十日自助行解决方案。随心定制，支持导入导出，全家人协同出游好帮手。
+                完美的法国与意大利十一日自助行解决方案。随心定制，支持导入导出，全家人协同出游好帮手。
             </p>
             <div class="text-xs text-gray-600 pt-4 border-t border-gray-850">
                 &copy; 2026年 自由行设计网站。使用 HTML5 LocalStorage 与 Redis KVDB 协同共享技术。
@@ -492,16 +492,30 @@
                 },
                 {
                     dayNum: "Day 10",
-                    title: "帝国遗迹与返程",
+                    title: "帝国遗迹与罗马漫步",
+                    phase: "第四阶段：深度罗马与梵蒂冈",
+                    transport: "",
+                    duration: "",
+                    accommodation: "罗马大都会星级酒店 (Starhotels Metropole Rome)",
+                    flight: "",
+                    activities: [
+                        { time: "上午", detail: "漫步于罗马的心脏——古罗马斗兽场（Colosseum）、君士坦丁凯旋门，穿行于宏伟废墟的古罗马遗址中，探寻千年前的帝国盛景。" },
+                        { time: "下午/傍晚", detail: "闲逛西班牙广场（Piazza di Spagna），沿着《罗马假日》里赫本的足迹走下西班牙台阶，品尝冰淇淋，购买当地伴手礼。" },
+                        { time: "晚上", detail: "于罗马老城区品尝地道的罗马炭烤小羊排与传统意式手工匹萨（Pizza），享受在欧洲的最后一个优雅悠闲之夜。" }
+                    ]
+                },
+                {
+                    dayNum: "Day 11",
+                    title: "罗马返程 ➔ 顺利安抵上海",
                     phase: "第四阶段：深度罗马与梵蒂冈",
                     transport: "返程航班",
                     duration: "晚间离境",
                     accommodation: "飞机上 (东方航空 MU788 航班机舱)",
-                    flight: "东航 MU788 | 罗马 FCO (21:10 起飞) ➔ 上海浦东 PVG (次日 14:35 降落)",
+                    flight: "东航 MU788 | 罗马 FCO (21:10 起飞) ➔ 上海浦东 PVG (次日 14:35 降落) [2026-08-23]",
                     activities: [
-                        { time: "上午", detail: "漫步于罗马的心脏——古罗马斗兽场（Colosseum）、君士坦丁凯旋门，穿行于宏伟废墟的古罗马遗址中，探寻千年前的帝国盛景。" },
-                        { time: "下午/傍晚", detail: "收拾行李，于 16:00 左右前往罗马菲乌米奇诺机场 (FCO)，预留充沛时间享用简餐，并办妥意大利及法国的退税手续。" },
-                        { time: "晚上", detail: "【搭乘班机】21:10 搭乘东方航空 MU788 航班自罗马直飞回国。宿机舱中，次日 14:35 顺利抵达上海浦东国际机场 (PVG)，结束丰富精彩的法意十日之旅！" }
+                        { time: "上午", detail: "在罗马度过慵懒而美好的清晨。可以在经典的手工咖啡馆品尝一杯纯正 Espresso，或去超市采买特色意面和松露酱。" },
+                        { time: "下午", detail: "在酒店享用午餐、办理退房并寄存行李。于 16:30 左右收拾完毕前往罗马菲乌米奇诺机场 (FCO)，预留充沛时间办妥意大利及欧洲物品退税手续。" },
+                        { time: "晚上", detail: "【搭乘班机】21:10 搭乘东方航空 MU788 航班自罗马直飞回国。宿机舱中，次日 14:35 顺利抵达上海浦东国际机场 (PVG)，结束十一日完美法意之旅！" }
                     ]
                 }
             ]
@@ -1014,6 +1028,27 @@
 
             if (!dateStr) return '';
 
+            let labelSuffix = '';
+            // If the day contains accommodation info, extract city name to display on the tab button
+            if (day.accommodation) {
+                const cleanAcc = day.accommodation.trim();
+                // Simple parser to extract city name from accommodation string (extracting Chinese characters before spaces/parenthesis/brackets)
+                const matchChinese = cleanAcc.match(/^([\u4e00-\u9fa5]+)/);
+                if (matchChinese && matchChinese[1]) {
+                    let cityName = matchChinese[1];
+                    // If accommodation name is too long like "巴黎中心埃菲尔...", just slice the first 2-3 characters (e.g. "巴黎")
+                    if (cityName.length > 4) {
+                        cityName = cityName.slice(0, 2);
+                    }
+                    labelSuffix = ` • 宿${cityName}`;
+                } else {
+                    // Fallback to slice first 4 characters
+                    labelSuffix = ` • 宿${cleanAcc.slice(0, 2)}`;
+                }
+            } else if (index === currentData.days.length - 1 && day.title && day.title.includes('返程')) {
+                labelSuffix = ' • 返程';
+            }
+
             try {
                 const dateObj = new Date(dateStr + 'T00:00:00');
                 if (isNaN(dateObj.getTime())) return '';
@@ -1022,7 +1057,7 @@
                 
                 const daysOfWeek = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
                 const dayName = daysOfWeek[dateObj.getDay()];
-                return `${mm}-${dd} ${dayName}`;
+                return `${mm}-${dd} ${dayName}${labelSuffix}`;
             } catch (e) {
                 return '';
             }
@@ -1115,7 +1150,7 @@
             currentData.days.forEach((day, index) => {
                 const btn = document.createElement('button');
                 btn.id = `nav-btn-${index}`;
-                btn.className = "nav-btn shrink-0 px-3 py-1 rounded-xl text-xs font-semibold bg-gray-50 hover:bg-gray-100/80 border border-gray-200/50 text-gray-600 hover:text-gray-900 transition duration-200 flex flex-col items-center justify-center min-w-[54px] h-[40px]";
+                btn.className = "nav-btn shrink-0 px-3 py-1 rounded-xl text-xs font-semibold bg-gray-50 hover:bg-gray-100/80 border border-gray-200/50 text-gray-600 hover:text-gray-900 transition duration-200 flex flex-col items-center justify-center min-w-[76px] h-[40px]";
                 
                 const dayLabel = day.dayNum || `D${index+1}`;
                 const dateLabel = getShortDateStr(day, index);
@@ -1272,8 +1307,8 @@
 
         // View Day Navigation Scrolls
         function scrollToDay(index) {
-            const inactiveClass = "nav-btn shrink-0 px-3 py-1 rounded-xl text-xs font-semibold bg-gray-50 hover:bg-gray-100/80 border border-gray-200/50 text-gray-600 hover:text-gray-900 transition duration-200 flex flex-col items-center justify-center min-w-[54px] h-[40px]";
-            const activeClass = "nav-btn active shrink-0 px-3 py-1 rounded-xl text-xs font-bold text-white bg-gray-900 border border-transparent transition duration-200 flex flex-col items-center justify-center min-w-[54px] h-[40px]";
+            const inactiveClass = "nav-btn shrink-0 px-3 py-1 rounded-xl text-xs font-semibold bg-gray-50 hover:bg-gray-100/80 border border-gray-200/50 text-gray-600 hover:text-gray-900 transition duration-200 flex flex-col items-center justify-center min-w-[76px] h-[40px]";
+            const activeClass = "nav-btn active shrink-0 px-3 py-1 rounded-xl text-xs font-bold text-white bg-gray-900 border border-transparent transition duration-200 flex flex-col items-center justify-center min-w-[76px] h-[40px]";
 
             // Remove active classes
             document.querySelectorAll('.nav-btn').forEach(btn => {
