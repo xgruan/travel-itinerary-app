@@ -91,7 +91,9 @@
                         <span class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-calendar-day"></i></span>
                         <div class="flex-1">
                             <p class="font-bold text-gray-800">出发旅行日期</p>
-                            <input type="date" id="tour-start-date" onchange="updateStartDate(this.value)" class="mt-1 w-full text-xs px-2.5 py-1.5 border border-gray-200 rounded-lg focus:ring-1 focus:ring-amber-500 outline-none hover:border-gray-300 transition" title="设定首日出发时间，后续日程将自动排期">
+                            <p class="text-xs text-emerald-800 font-bold mt-1 bg-emerald-50 border border-emerald-100/60 px-2.5 py-1.5 rounded-lg flex items-center gap-1.5">
+                                <i class="fa-solid fa-lock text-[10px] text-emerald-500"></i> 2026年08月13日 (已选定)
+                            </p>
                         </div>
                     </li>
                     <li class="flex items-center">
@@ -290,6 +292,7 @@
     <script>
         // Default Travel Itinerary Data based on User Document
         const defaultData = {
+            startDate: "2026-08-13",
             tips: [
                 "三大抢票难点：卢浮宫、梵蒂冈博物馆、乌菲兹美术馆务必提前预订门票！",
                 "8月酷暑避暑：下午 13:00-16:00 建议在室内或回酒店小憩，17:00 后再开启户外游步览。",
@@ -889,7 +892,7 @@
         // Update travel start date
         function updateStartDate(val) {
             if (!currentData) return;
-            currentData.startDate = val;
+            currentData.startDate = "2026-08-13";
             saveToLocalStorage();
             renderAll();
         }
@@ -961,6 +964,9 @@
 
         // Render All UI Component
         function renderAll() {
+            if (currentData) {
+                currentData.startDate = "2026-08-13";
+            }
             renderTips();
             renderNav();
             renderTimeline();
