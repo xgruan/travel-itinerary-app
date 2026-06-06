@@ -1032,18 +1032,33 @@
             // If the day contains accommodation info, extract city name to display on the tab button
             if (day.accommodation) {
                 const cleanAcc = day.accommodation.trim();
-                // Simple parser to extract city name from accommodation string (extracting Chinese characters before spaces/parenthesis/brackets)
-                const matchChinese = cleanAcc.match(/^([\u4e00-\u9fa5]+)/);
-                if (matchChinese && matchChinese[1]) {
-                    let cityName = matchChinese[1];
-                    // If accommodation name is too long like "巴黎中心埃菲尔...", just slice the first 2-3 characters (e.g. "巴黎")
-                    if (cityName.length > 4) {
-                        cityName = cityName.slice(0, 2);
+                
+                // Prioritize matching known tourist cities first so names like "佛罗伦萨", "威尼斯" remain full
+                const knownCities = ["佛罗伦萨", "威尼斯", "阿姆斯特丹", "哥本哈根", "斯德哥尔摩", "赫尔辛基", "巴塞罗那", "塞维利亚", "萨尔茨堡", "布达佩斯", "伊斯坦布尔", "吉隆坡", "圣托里尼", "因特拉肯", "苏黎世", "日内瓦", "温哥华", "旧金山", "洛杉矶", "巴黎", "尼斯", "罗马", "米兰", "伦敦", "东京", "京都", "大阪", "首尔", "曼谷", "清迈", "迪拜", "悉尼", "墨尔本", "奥克兰", "新德里", "新加坡", "马德里"];
+                let cityName = '';
+                for (const city of knownCities) {
+                    if (cleanAcc.includes(city)) {
+                        cityName = city;
+                        break;
                     }
+                }
+
+                if (cityName) {
                     cityLabel = cityName;
                 } else {
-                    // Fallback to slice first 4 characters
-                    cityLabel = cleanAcc.slice(0, 2);
+                    // Fallback to extraction via Chinese Regex pattern
+                    const matchChinese = cleanAcc.match(/^([\u4e00-\u9fa5]+)/);
+                    if (matchChinese && matchChinese[1]) {
+                        let extracted = matchChinese[1];
+                        // If accommodation name is too long like "巴黎中心埃菲尔...", just slice the first 2-3 characters (e.g. "巴黎")
+                        if (extracted.length > 4) {
+                            extracted = extracted.slice(0, 2);
+                        }
+                        cityLabel = extracted;
+                    } else {
+                        // Fallback to slice first 2 characters
+                        cityLabel = cleanAcc.slice(0, 2);
+                    }
                 }
             } else if (index === currentData.days.length - 1 && day.title && day.title.includes('返程')) {
                 cityLabel = '返程';
