@@ -147,15 +147,14 @@
             <div class="space-y-6">
                 
                 <!-- Filter or Quick Nav of Days -->
-                <div class="sticky top-4 z-40 bg-white/95 backdrop-blur-md rounded-2xl px-6 py-4 shadow-sm border border-gray-100 flex items-center justify-between overflow-x-auto gap-4">
-                    <span class="font-bold text-gray-900 shrink-0 text-sm md:text-base">
-                        <i class="fa-solid fa-map"></i> 日程导航:
-                    </span>
-                    <div class="flex gap-2 py-1 select-none overflow-x-auto no-scrollbar scroll-smooth items-center">
-                        <button onclick="scrollToDay('all')" id="nav-btn-all" class="nav-btn active shrink-0 px-2.5 py-1 rounded-xl text-white bg-gray-900 shadow-sm border border-transparent transition duration-200 flex flex-col items-center justify-center min-w-[56px] h-[44px]">
-                            <span class="text-xs font-bold leading-none">全部</span>
-                            <span class="text-[9px] opacity-75 font-medium leading-none mt-1">All</span>
-                        </button>
+            <div class="sticky top-4 z-40 bg-white/95 backdrop-blur-md rounded-2xl px-6 py-4 shadow-[0_4px_25px_-4px_rgba(0,0,0,0.05)] border border-gray-100/80 flex items-center justify-between overflow-x-auto gap-4">
+                <span class="font-extrabold text-amber-900 shrink-0 text-sm md:text-base flex items-center gap-1.5">
+                    <i class="fa-solid fa-compass text-amber-500 animate-spin-slow"></i> 日程导航
+                </span>
+                <div class="flex gap-2 py-1 select-none overflow-x-auto no-scrollbar scroll-smooth items-center">
+                    <button onclick="scrollToDay('all')" id="nav-btn-all" class="nav-btn active shrink-0 px-3.5 py-1.5 rounded-2xl text-xs font-black text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-md shadow-amber-500/20 border-transparent transition-all duration-200 flex flex-col items-center justify-center min-w-[62px] h-[48px] scale-105">
+                        <span class="text-xs font-black leading-none">全部</span>
+                        <span class="text-[9px] opacity-75 font-semibold leading-none mt-1.5">All</span>
                         <!-- Days loaded dynamically (D1, D2...) -->
                         <div id="day-nav-container" class="flex gap-2"></div>
                     </div>
@@ -1115,14 +1114,14 @@
             currentData.days.forEach((day, index) => {
                 const btn = document.createElement('button');
                 btn.id = `nav-btn-${index}`;
-                btn.className = "nav-btn shrink-0 px-2.5 py-1 rounded-xl text-xs font-semibold bg-gray-50 hover:bg-gray-100 border border-gray-200/50 text-gray-600 hover:text-gray-900 transition duration-200 flex flex-col items-center justify-center min-w-[56px] h-[44px]";
+                btn.className = "nav-btn shrink-0 px-3.5 py-1.5 rounded-2xl text-xs font-bold bg-amber-500/5 hover:bg-amber-500/10 border border-amber-500/10 text-amber-900/80 hover:text-amber-950 shadow-[0_2px_8px_-3px_rgba(245,158,11,0.06)] transition-all duration-200 flex flex-col items-center justify-center min-w-[62px] h-[48px] hover:scale-105 active:scale-95";
                 
                 const dayLabel = day.dayNum || `D${index+1}`;
                 const dateLabel = getShortDateStr(day, index);
                 
                 btn.innerHTML = `
-                    <span class="text-xs font-bold leading-none">${dayLabel}</span>
-                    <span class="text-[9px] opacity-75 font-medium leading-none mt-1">${dateLabel}</span>
+                    <span class="text-xs font-black leading-none">${dayLabel}</span>
+                    <span class="text-[9px] opacity-75 font-semibold leading-none mt-1.5">${dateLabel}</span>
                 `;
                 btn.onclick = () => scrollToDay(index);
                 container.appendChild(btn);
@@ -1272,8 +1271,8 @@
 
         // View Day Navigation Scrolls
         function scrollToDay(index) {
-            const inactiveClass = "nav-btn shrink-0 px-2.5 py-1 rounded-xl text-xs font-semibold bg-gray-50 hover:bg-gray-100 border border-gray-200/50 text-gray-600 hover:text-gray-900 transition duration-200 flex flex-col items-center justify-center min-w-[56px] h-[44px]";
-            const activeClass = "nav-btn active shrink-0 px-2.5 py-1 rounded-xl text-white bg-gray-900 shadow-sm border border-transparent transition duration-200 flex flex-col items-center justify-center min-w-[56px] h-[44px]";
+            const inactiveClass = "nav-btn shrink-0 px-3.5 py-1.5 rounded-2xl text-xs font-bold bg-amber-500/5 hover:bg-amber-500/10 border border-amber-500/10 text-amber-900/80 hover:text-amber-950 shadow-[0_2px_8px_-3px_rgba(245,158,11,0.06)] transition-all duration-200 flex flex-col items-center justify-center min-w-[62px] h-[48px] hover:scale-105 active:scale-95";
+            const activeClass = "nav-btn active shrink-0 px-3.5 py-1.5 rounded-2xl text-xs font-black text-white bg-gradient-to-r from-amber-500 to-amber-600 shadow-md shadow-amber-500/20 border-transparent transition-all duration-200 flex flex-col items-center justify-center min-w-[62px] h-[48px] scale-105";
 
             // Remove active classes
             document.querySelectorAll('.nav-btn').forEach(btn => {
