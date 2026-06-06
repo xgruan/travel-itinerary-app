@@ -108,6 +108,13 @@
                             <p>TGV高铁 + 跨国火车 + 意铁/italo</p>
                         </div>
                     </li>
+                    <li class="flex items-center">
+                        <span class="w-8 h-8 rounded-full bg-sky-50 text-sky-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-plane-up"></i></span>
+                        <div class="flex-1">
+                            <p class="font-bold text-gray-800">往返航班</p>
+                            <p id="flight-overview" class="text-sm text-gray-600">未设置 — 请在日程中填写首/末日航班信息</p>
+                        </div>
+                    </li>
                 </ul>
             </div>
 
@@ -963,6 +970,47 @@
             const dateInput = document.getElementById('tour-start-date');
             if (dateInput) {
                 dateInput.value = currentData.startDate || "";
+            }
+
+            // Populate flight overview (show outbound and return from first/last day)
+            try {
+                const flightEl = document.getElementById('flight-overview');
+                if (flightEl && currentData && Array.isArray(currentData.days) && currentData.days.length > 0) {
+                    const first = currentData.days[0] && currentData.days[0].flight ? currentData.days[0].flight : '';
+                    const last = currentData.days[currentData.days.length - 1] && currentData.days[currentData.days.length - 1].flight ? currentData.days[currentData.days.length - 1].flight : '';
+                    
+                    if (first || last) {
+                        flightEl.className = "mt-2 space-y-2.5";
+                        flightEl.innerHTML = `
+                            <div class="flex flex-col gap-2 p-3 bg-slate-50/70 rounded-xl border border-slate-100 shadow-inner">
+                                ${first ? `
+                                <div class="flex items-start gap-2.5">
+                                    <span class="flex items-center justify-center w-5 h-5 rounded-full bg-amber-500/10 text-amber-600 shrink-0 mt-0.5"><i class="fa-solid fa-plane-departure text-[10px]"></i></span>
+                                    <div class="text-xs">
+                                        <span class="font-extrabold text-amber-600 block text-[9px] uppercase tracking-wider mb-0.5">去程航班 (首日)</span>
+                                        <span class="text-gray-700 font-medium leading-relaxed">${escapeHtml(first)}</span>
+                                    </div>
+                                </div>
+                                ` : ''}
+                                ${first && last ? '<div class="h-px bg-slate-200/60 my-0.5"></div>' : ''}
+                                ${last ? `
+                                <div class="flex items-start gap-2.5">
+                                    <span class="flex items-center justify-center w-5 h-5 rounded-full bg-sky-500/10 text-sky-600 shrink-0 mt-0.5"><i class="fa-solid fa-plane-arrival text-[10px]"></i></span>
+                                    <div class="text-xs">
+                                        <span class="font-extrabold text-sky-600 block text-[9px] uppercase tracking-wider mb-0.5">回程航班 (末日)</span>
+                                        <span class="text-gray-700 font-medium leading-relaxed">${escapeHtml(last)}</span>
+                                    </div>
+                                </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    } else {
+                        flightEl.className = "text-xs italic text-gray-400 mt-2";
+                        flightEl.innerText = '暂无设置 — 可点击首日/末日卡片中的“修改日程”添加航班';
+                    }
+                }
+            } catch (e) {
+                // ignore
             }
         }
 
