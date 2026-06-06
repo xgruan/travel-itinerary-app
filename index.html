@@ -69,16 +69,33 @@
     </header>
 
     <!-- Main Container -->
-    <main class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <main class="max-w-7xl mx-auto px-4 py-10">
         
-        <!-- Left Sidebar: Overview & Key Tips -->
-        <div class="lg:col-span-4 space-y-6">
-            
-            <!-- Quick Info Panel -->
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                <h3 class="text-lg font-bold text-gray-900 border-b border-gray-100 pb-3 mb-4 flex items-center">
-                    <i class="fa-solid fa-circle-info text-blue-500 mr-2"></i> 行程概览
+        <!-- Key Tips Section at the Top of the Page -->
+        <div class="mb-8 bg-gradient-to-r from-amber-50 to-amber-50/50 border border-amber-200/60 rounded-3xl p-6 md:p-8 shadow-sm">
+            <div class="flex items-center justify-between border-b border-amber-200/50 pb-4 mb-4">
+                <h3 class="text-amber-800 text-lg md:text-xl font-bold flex items-center">
+                    <i class="fa-solid fa-bell-ring fa-bounce mr-2.5 text-amber-600"></i> 行前重点提醒
                 </h3>
+                <button onclick="openTipsModal()" class="text-xs md:text-sm text-white bg-amber-600 hover:bg-amber-700 font-bold px-3 py-1.5 rounded-full shadow-sm hover:shadow transition duration-200 flex items-center gap-1">
+                    <i class="fa-solid fa-pen-to-square"></i> 修改提醒
+                </button>
+            </div>
+            <div id="tips-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-amber-950/90">
+                <!-- Tips loaded dynamically from Javascript -->
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+            <!-- Left Sidebar: Overview & Key Tips -->
+            <div class="lg:col-span-4 space-y-6">
+                
+                <!-- Quick Info Panel -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                    <h3 class="text-lg font-bold text-gray-900 border-b border-gray-100 pb-3 mb-4 flex items-center">
+                        <i class="fa-solid fa-circle-info text-blue-500 mr-2"></i> 行程概览
+                    </h3>
                 <ul class="space-y-4 text-sm text-gray-600">
                     <li class="flex items-center">
                         <span class="w-8 h-8 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-calendar-days"></i></span>
@@ -118,21 +135,6 @@
                         </div>
                     </li>
                 </ul>
-            </div>
-
-            <!-- Key Tips Section -->
-            <div class="bg-amber-50/70 border border-amber-200/50 rounded-2xl p-6 shadow-sm">
-                <div class="flex items-center justify-between border-b border-amber-200/50 pb-3 mb-4">
-                    <h3 class="text-amber-800 text-lg font-bold flex items-center">
-                        <i class="fa-solid fa-lightbulb mr-2 text-amber-600"></i> 行前重点提醒
-                    </h3>
-                    <button onclick="openTipsModal()" class="text-xs text-amber-700 hover:text-amber-900 font-medium underline flex items-center gap-1">
-                        <i class="fa-solid fa-pen-to-square"></i> 修改
-                    </button>
-                </div>
-                <div id="tips-container" class="space-y-3 text-sm text-amber-950/80 leading-relaxed">
-                    <!-- Tips loaded dynamically from Javascript -->
-                </div>
             </div>
 
             <!-- Share Information Info -->
@@ -1082,16 +1084,16 @@
             container.innerHTML = '';
             
             if (currentData.tips.length === 0) {
-                container.innerHTML = '<p class="text-xs italic text-amber-600">暂无行前提醒</p>';
+                container.innerHTML = '<p class="text-xs italic text-amber-600 col-span-full">暂无行前提醒</p>';
                 return;
             }
 
             currentData.tips.forEach((tip, idx) => {
                 const li = document.createElement('div');
-                li.className = "flex items-start gap-2.5";
+                li.className = "flex items-start gap-3 bg-amber-500/5 hover:bg-amber-500/10 border border-amber-500/10 hover:border-amber-500/20 p-3.5 rounded-xl transition duration-200 shadow-[0_2px_8px_-3px_rgba(245,158,11,0.08)]";
                 li.innerHTML = `
-                    <span class="text-amber-500 font-bold shrink-0 mt-0.5">•</span>
-                    <p class="text-[13px] text-amber-950/80 leading-relaxed">${escapeHtml(tip)}</p>
+                    <span class="w-5 h-5 rounded-full bg-amber-100 text-amber-600 text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
+                    <p class="text-[13px] text-amber-950/90 leading-relaxed font-medium">${escapeHtml(tip)}</p>
                 `;
                 container.appendChild(li);
             });
