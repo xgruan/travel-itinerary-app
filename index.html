@@ -71,78 +71,87 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 py-10">
         
-        <!-- Key Tips Section at the Top of the Page -->
-        <div class="mb-8 bg-gradient-to-r from-amber-50 to-amber-50/50 border border-amber-200/60 rounded-3xl p-6 md:p-8 shadow-sm">
-            <div class="flex items-center justify-between border-b border-amber-200/50 pb-4 mb-4">
-                <h3 class="text-amber-800 text-lg md:text-xl font-bold flex items-center">
-                    <i class="fa-solid fa-bell-ring fa-bounce mr-2.5 text-amber-600"></i> 行前重点提醒
-                </h3>
-                <button onclick="openTipsModal()" class="text-xs md:text-sm text-white bg-amber-600 hover:bg-amber-700 font-bold px-3 py-1.5 rounded-full shadow-sm hover:shadow transition duration-200 flex items-center gap-1">
-                    <i class="fa-solid fa-pen-to-square"></i> 修改提醒
-                </button>
+        <!-- Top Board Grid: Overview (Left) & Key Tips (Right) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
+            
+            <!-- Left Top Block: Overview (5 Cols on large, full on small) -->
+            <div class="lg:col-span-4 bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-lg md:text-xl font-bold text-gray-900 border-b border-gray-100 pb-3 mb-4 flex items-center">
+                        <i class="fa-solid fa-circle-info text-blue-500 mr-2"></i> 行程概览
+                    </h3>
+                    <ul class="space-y-4 text-sm text-gray-600">
+                        <li class="flex items-center">
+                            <span class="w-8 h-8 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-calendar-days"></i></span>
+                            <div>
+                                <p class="font-bold text-gray-800">总天数</p>
+                                <p>10天 (跨越 2 个国家)</p>
+                            </div>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-calendar-day"></i></span>
+                            <div class="flex-1">
+                                <p class="font-bold text-gray-800">出发旅行日期</p>
+                                <p class="text-xs text-emerald-800 font-bold mt-1 bg-emerald-50 border border-emerald-100/60 px-2.5 py-1.5 rounded-lg flex items-center gap-1.5">
+                                    <i class="fa-solid fa-lock text-[10px] text-emerald-500"></i> 2026年08月13日 星期四 (已选定)
+                                </p>
+                            </div>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-8 h-8 rounded-full bg-amber-50 text-amber-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-route"></i></span>
+                            <div>
+                                <p class="font-bold text-gray-800">纵贯途径</p>
+                                <p>巴黎 ➔ 尼斯 ➔ 佛罗伦萨 ➔ 威尼斯 ➔ 罗马</p>
+                            </div>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-8 h-8 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-train"></i></span>
+                            <div>
+                                <p class="font-bold text-gray-800">主交通方式</p>
+                                <p>TGV高铁 + 跨国火车 + 意铁/italo</p>
+                            </div>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-8 h-8 rounded-full bg-sky-50 text-sky-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-plane-up"></i></span>
+                            <div class="flex-1">
+                                <p class="font-bold text-gray-800">往返航班</p>
+                                <p id="flight-overview" class="text-sm text-gray-600">未设置 — 请在日程中填写首/末日航班信息</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div id="tips-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-amber-950/90">
-                <!-- Tips loaded dynamically from Javascript -->
+
+            <!-- Right Top Block: Key Tips (8 Cols on large, full on small) -->
+            <div class="lg:col-span-8 bg-gradient-to-r from-amber-50 to-amber-50/50 border border-amber-200/60 rounded-3xl p-6 md:p-8 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between border-b border-amber-200/50 pb-4 mb-4">
+                        <h3 class="text-amber-800 text-lg md:text-xl font-bold flex items-center">
+                            <i class="fa-solid fa-bell-ring fa-bounce mr-2.5 text-amber-600"></i> 行前重点提醒
+                        </h3>
+                        <button onclick="openTipsModal()" class="text-xs md:text-sm text-white bg-amber-600 hover:bg-amber-700 font-bold px-3 py-1.5 rounded-full shadow-sm hover:shadow transition duration-200 flex items-center gap-1">
+                            <i class="fa-solid fa-pen-to-square"></i> 修改提醒
+                        </button>
+                    </div>
+                    <div id="tips-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-amber-950/90">
+                        <!-- Tips loaded dynamically from Javascript -->
+                    </div>
+                </div>
             </div>
+
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-            <!-- Left Sidebar: Overview & Key Tips -->
+            <!-- Left Sidebar: Cloud Sync Status -->
             <div class="lg:col-span-4 space-y-6">
-                
-                <!-- Quick Info Panel -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                    <h3 class="text-lg font-bold text-gray-900 border-b border-gray-100 pb-3 mb-4 flex items-center">
-                        <i class="fa-solid fa-circle-info text-blue-500 mr-2"></i> 行程概览
-                    </h3>
-                <ul class="space-y-4 text-sm text-gray-600">
-                    <li class="flex items-center">
-                        <span class="w-8 h-8 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-calendar-days"></i></span>
-                        <div>
-                            <p class="font-bold text-gray-800">总天数</p>
-                            <p>10天 (跨越 2 个国家)</p>
-                        </div>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-calendar-day"></i></span>
-                        <div class="flex-1">
-                            <p class="font-bold text-gray-800">出发旅行日期</p>
-                            <p class="text-xs text-emerald-800 font-bold mt-1 bg-emerald-50 border border-emerald-100/60 px-2.5 py-1.5 rounded-lg flex items-center gap-1.5">
-                                <i class="fa-solid fa-lock text-[10px] text-emerald-500"></i> 2026年08月13日 星期四 (已选定)
-                            </p>
-                        </div>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="w-8 h-8 rounded-full bg-amber-50 text-amber-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-route"></i></span>
-                        <div>
-                            <p class="font-bold text-gray-800">纵贯途径</p>
-                            <p>巴黎 ➔ 尼斯 ➔ 佛罗伦萨 ➔ 威尼斯 ➔ 罗马</p>
-                        </div>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="w-8 h-8 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-train"></i></span>
-                        <div>
-                            <p class="font-bold text-gray-800">主交通方式</p>
-                            <p>TGV高铁 + 跨国火车 + 意铁/italo</p>
-                        </div>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="w-8 h-8 rounded-full bg-sky-50 text-sky-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-plane-up"></i></span>
-                        <div class="flex-1">
-                            <p class="font-bold text-gray-800">往返航班</p>
-                            <p id="flight-overview" class="text-sm text-gray-600">未设置 — 请在日程中填写首/末日航班信息</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
 
-            <!-- Share Information Info -->
-            <div id="cloud-sync-card" class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 relative overflow-hidden transition-all duration-300">
-                <!-- Loaded dynamically by renderCloudSyncCard() -->
-            </div>
+                <!-- Share Information Info -->
+                <div id="cloud-sync-card" class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 relative overflow-hidden transition-all duration-300">
+                    <!-- Loaded dynamically by renderCloudSyncCard() -->
+                </div>
 
-        </div>
+            </div>
 
         <!-- Right Content: Days Timeline -->
         <div class="lg:col-span-8 space-y-6">
