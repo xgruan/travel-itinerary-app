@@ -152,9 +152,9 @@
                     <i class="fa-regular fa-compass text-gray-400"></i> 日程导航
                 </span>
                 <div class="flex gap-1.5 py-0.5 select-none overflow-x-auto no-scrollbar scroll-smooth items-center">
-                    <button onclick="scrollToDay('all')" id="nav-btn-all" class="nav-btn active shrink-0 px-3 py-1 rounded-xl text-xs font-bold text-white bg-gray-900 border border-transparent transition duration-200 flex flex-col items-center justify-center min-w-[54px] h-[40px]">
-                        <span class="text-[11px] font-bold leading-none">全部</span>
-                        <span class="text-[8px] opacity-70 font-semibold leading-none mt-1">All</span>
+                    <button onclick="scrollToDay('all')" id="nav-btn-all" class="nav-btn active shrink-0 px-2.5 py-1.5 rounded-xl text-xs font-bold text-white bg-gray-900 border border-transparent transition duration-200 flex flex-col items-center justify-center min-w-[64px] h-[54px]">
+                        <span class="text-[12px] font-bold leading-none">全部</span>
+                        <span class="text-[10px] opacity-70 font-semibold leading-none mt-1">All</span>
                     </button>
                     <!-- Days loaded dynamically (D1, D2...) -->
                     <div id="day-nav-container" class="flex gap-1.5"></div>
@@ -1026,9 +1026,9 @@
                 dateStr = `${yyyy}-${mm}-${dd}`;
             }
 
-            if (!dateStr) return '';
+            if (!dateStr) return { date: '', city: '' };
 
-            let labelSuffix = '';
+            let cityLabel = '';
             // If the day contains accommodation info, extract city name to display on the tab button
             if (day.accommodation) {
                 const cleanAcc = day.accommodation.trim();
@@ -1040,26 +1040,29 @@
                     if (cityName.length > 4) {
                         cityName = cityName.slice(0, 2);
                     }
-                    labelSuffix = ` • 宿${cityName}`;
+                    cityLabel = cityName;
                 } else {
                     // Fallback to slice first 4 characters
-                    labelSuffix = ` • 宿${cleanAcc.slice(0, 2)}`;
+                    cityLabel = cleanAcc.slice(0, 2);
                 }
             } else if (index === currentData.days.length - 1 && day.title && day.title.includes('返程')) {
-                labelSuffix = ' • 返程';
+                cityLabel = '返程';
             }
 
             try {
                 const dateObj = new Date(dateStr + 'T00:00:00');
-                if (isNaN(dateObj.getTime())) return '';
+                if (isNaN(dateObj.getTime())) return { date: '', city: '' };
                 const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
                 const dd = String(dateObj.getDate()).padStart(2, '0');
                 
                 const daysOfWeek = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
                 const dayName = daysOfWeek[dateObj.getDay()];
-                return `${mm}-${dd} ${dayName}${labelSuffix}`;
+                return {
+                    date: `${mm}-${dd} ${dayName}`,
+                    city: cityLabel
+                };
             } catch (e) {
-                return '';
+                return { date: '', city: '' };
             }
         }
 
@@ -1150,14 +1153,15 @@
             currentData.days.forEach((day, index) => {
                 const btn = document.createElement('button');
                 btn.id = `nav-btn-${index}`;
-                btn.className = "nav-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-50 hover:bg-gray-100/80 border border-gray-200/50 text-gray-600 hover:text-gray-900 transition duration-200 flex flex-col items-center justify-center min-w-[85px] h-[46px]";
+                btn.className = "nav-btn shrink-0 px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-50 hover:bg-gray-100/80 border border-gray-200/50 text-gray-600 hover:text-gray-900 transition duration-200 flex flex-col items-center justify-center min-w-[90px] h-[54px]";
                 
                 const dayLabel = day.dayNum || `D${index+1}`;
-                const dateLabel = getShortDateStr(day, index);
+                const dayInfo = getShortDateStr(day, index);
                 
                 btn.innerHTML = `
                     <span class="text-[12px] font-bold leading-none">${dayLabel}</span>
-                    <span class="text-[10px] opacity-75 font-semibold leading-none mt-1.5">${dateLabel}</span>
+                    <span class="text-[10px] opacity-60 font-semibold leading-none mt-1">${dayInfo.date}</span>
+                    ${dayInfo.city ? `<span class="text-[10px] opacity-95 font-bold leading-none mt-1 text-teal-600 dark:text-teal-400">${dayInfo.city}</span>` : ''}
                 `;
                 btn.onclick = () => scrollToDay(index);
                 container.appendChild(btn);
@@ -1307,16 +1311,20 @@
 
         // View Day Navigation Scrolls
         function scrollToDay(index) {
-            const inactiveClass = "nav-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-50 hover:bg-gray-100/80 border border-gray-200/50 text-gray-600 hover:text-gray-900 transition duration-200 flex flex-col items-center justify-center min-w-[85px] h-[46px]";
-            const activeClass = "nav-btn active shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-gray-900 border border-transparent transition duration-200 flex flex-col items-center justify-center min-w-[85px] h-[46px]";
+            const inactiveClass = "nav-btn shrink-0 px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-50 hover:bg-gray-100/80 border border-gray-200/50 text-gray-600 hover:text-gray-900 transition duration-200 flex flex-col items-center justify-center min-w-[90px] h-[54px]";
+            const activeClass = "nav-btn active shrink-0 px-2.5 py-1.5 rounded-xl text-xs font-bold text-white bg-gray-900 border border-transparent transition duration-200 flex flex-col items-center justify-center min-w-[90px] h-[54px]";
 
             // Remove active classes
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.className = inactiveClass;
+                if (btn.id === 'nav-btn-all') {
+                    btn.className = "nav-btn shrink-0 px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-50 hover:bg-gray-100/80 border border-gray-200/50 text-gray-600 hover:text-gray-900 transition duration-200 flex flex-col items-center justify-center min-w-[64px] h-[54px]";
+                } else {
+                    btn.className = inactiveClass;
+                }
             });
 
             if (index === 'all') {
-                document.getElementById('nav-btn-all').className = activeClass;
+                document.getElementById('nav-btn-all').className = "nav-btn active shrink-0 px-2.5 py-1.5 rounded-xl text-xs font-bold text-white bg-gray-900 border border-transparent transition duration-200 flex flex-col items-center justify-center min-w-[64px] h-[54px]";
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 return;
             }
