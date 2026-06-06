@@ -141,53 +141,52 @@
 
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="grid grid-cols-1 gap-8">
         
-            <!-- Left Sidebar: Cloud Sync Status -->
-            <div class="lg:col-span-4 space-y-6">
+            <!-- Right Content: Days Timeline -->
+            <div class="space-y-6">
+                
+                <!-- Filter or Quick Nav of Days -->
+                <div class="sticky top-4 z-40 bg-white/95 backdrop-blur-md rounded-2xl px-6 py-4 shadow-sm border border-gray-100 flex items-center justify-between overflow-x-auto gap-4">
+                    <span class="font-bold text-gray-900 shrink-0 text-sm md:text-base">
+                        <i class="fa-solid fa-map"></i> 日程导航:
+                    </span>
+                    <div class="flex gap-2 py-1 select-none overflow-x-auto no-scrollbar scroll-smooth items-center">
+                        <button onclick="scrollToDay('all')" id="nav-btn-all" class="nav-btn active shrink-0 px-2.5 py-1 rounded-xl text-white bg-gray-900 shadow-sm border border-transparent transition duration-200 flex flex-col items-center justify-center min-w-[56px] h-[44px]">
+                            <span class="text-xs font-bold leading-none">全部</span>
+                            <span class="text-[9px] opacity-75 font-medium leading-none mt-1">All</span>
+                        </button>
+                        <!-- Days loaded dynamically (D1, D2...) -->
+                        <div id="day-nav-container" class="flex gap-2"></div>
+                    </div>
+                </div>
 
-                <!-- Share Information Info -->
-                <div id="cloud-sync-card" class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 relative overflow-hidden transition-all duration-300">
-                    <!-- Loaded dynamically by renderCloudSyncCard() -->
+                <!-- Days Timeline View Container -->
+                <div id="days-container" class="space-y-8">
+                    <!-- Day detailed card dynamically loaded -->
                 </div>
 
             </div>
-
-        <!-- Right Content: Days Timeline -->
-        <div class="lg:col-span-8 space-y-6">
-            
-            <!-- Filter or Quick Nav of Days -->
-            <div class="sticky top-4 z-40 bg-white/95 backdrop-blur-md rounded-2xl px-6 py-4 shadow-sm border border-gray-100 flex items-center justify-between overflow-x-auto gap-4">
-                <span class="font-bold text-gray-900 shrink-0 text-sm md:text-base">
-                    <i class="fa-solid fa-map"></i> 日程导航:
-                </span>
-                <div class="flex gap-2 py-1 select-none overflow-x-auto no-scrollbar scroll-smooth items-center">
-                    <button onclick="scrollToDay('all')" id="nav-btn-all" class="nav-btn active shrink-0 px-2.5 py-1 rounded-xl text-white bg-gray-900 shadow-sm border border-transparent transition duration-200 flex flex-col items-center justify-center min-w-[56px] h-[44px]">
-                        <span class="text-xs font-bold leading-none">全部</span>
-                        <span class="text-[9px] opacity-75 font-medium leading-none mt-1">All</span>
-                    </button>
-                    <!-- Days loaded dynamically (D1, D2...) -->
-                    <div id="day-nav-container" class="flex gap-2"></div>
-                </div>
-            </div>
-
-            <!-- Days Timeline View Container -->
-            <div id="days-container" class="space-y-8">
-                <!-- Day detailed card dynamically loaded -->
-            </div>
-
         </div>
     </main>
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-gray-400 mt-20 py-12 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 text-center space-y-4">
-            <h3 class="serif-title text-white text-xl font-bold tracking-wider">法意纵贯 · 文艺复兴之路 10日全计划</h3>
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-6">
+            
+            <!-- Move cloud-sync-card inside the dark footer as a glowing component -->
+            <div class="max-w-md mx-auto text-left">
+                <div id="cloud-sync-card" class="bg-gray-800/80 rounded-2xl p-6 shadow-xl border border-gray-700/50 relative overflow-hidden transition-all duration-300">
+                    <!-- Loaded dynamically by renderCloudSyncCard() -->
+                </div>
+            </div>
+
+            <h3 class="serif-title text-white text-xl font-bold tracking-wider pt-4">法意纵贯 · 文艺复兴之路 10日全计划</h3>
             <p class="text-sm max-w-md mx-auto leading-relaxed">
                 完美的法国与意大利十日自助行解决方案。随心定制，支持导入导出，全家人协同出游好帮手。
             </p>
-            <div class="text-xs text-gray-600 pt-4 border-t border-gray-800">
-                &copy; 2026年 自由行设计网站。使用 HTML5 LocalStorage 技术存储，无需担心隐私。
+            <div class="text-xs text-gray-600 pt-4 border-t border-gray-850">
+                &copy; 2026年 自由行设计网站。使用 HTML5 LocalStorage 与 Redis KVDB 协同共享技术。
             </div>
         </div>
     </footer>
