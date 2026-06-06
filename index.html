@@ -956,7 +956,10 @@
                 if (isNaN(dateObj.getTime())) return '';
                 const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
                 const dd = String(dateObj.getDate()).padStart(2, '0');
-                return `${mm}-${dd}`;
+                
+                const daysOfWeek = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+                const dayName = daysOfWeek[dateObj.getDay()];
+                return `${mm}-${dd} ${dayName}`;
             } catch (e) {
                 return '';
             }
