@@ -571,7 +571,9 @@
             // Pull from public KVDB cloud if collaborative channel is enabled
             if (cloudChannel) {
                 try {
-                    const res = await fetch(CLOUD_URL_BASE + cloudChannel);
+                    // Prevent mobile cache (extremely common on iOS Safari / WeChat browser)
+                    const nocacheUrl = `${CLOUD_URL_BASE}${cloudChannel}?_t=${Date.now()}`;
+                    const res = await fetch(nocacheUrl);
                     if (res.ok) {
                         const cloudData = await res.json();
                         if (cloudData && cloudData.days && cloudData.days.length > 0) {
@@ -907,7 +909,8 @@
         async function syncPull() {
             if (!cloudChannel) return;
             try {
-                const res = await fetch(CLOUD_URL_BASE + cloudChannel);
+                const nocacheUrl = `${CLOUD_URL_BASE}${cloudChannel}?_t=${Date.now()}`;
+                const res = await fetch(nocacheUrl);
                 if (res.ok) {
                     const cloudData = await res.json();
                     if (cloudData && cloudData.days && cloudData.days.length > 0) {
@@ -939,7 +942,8 @@
         setInterval(async () => {
             if (!cloudChannel || isEditingAny()) return;
             try {
-                const res = await fetch(CLOUD_URL_BASE + cloudChannel);
+                const nocacheUrl = `${CLOUD_URL_BASE}${cloudChannel}?_t=${Date.now()}`;
+                const res = await fetch(nocacheUrl);
                 if (res.ok) {
                     const cloudData = await res.json();
                     if (cloudData && cloudData.days && cloudData.days.length > 0) {
