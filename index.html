@@ -215,23 +215,54 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">交通工具 (如：TGV高铁，无则留空)</label>
-                        <input type="text" id="edit-day-transport" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none" placeholder="TGV高铁 / 跨国火车 / 意铁">
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">交通工具类型</label>
+                        <select id="edit-day-transport" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none bg-white text-sm font-medium">
+                            <option value="">（无交通工具）</option>
+                            <option value="TGV高铁">TGV高速铁路 (高铁)</option>
+                            <option value="意铁高铁">意铁/italo (意大利高铁)</option>
+                            <option value="跨国火车">意法跨国中转火车</option>
+                            <option value="大巴/中巴">大巴 / 包车 / 巴士</option>
+                            <option value="租赁自驾">自驾租车 / 的士出行</option>
+                            <option value="塞纳河游游船">塞纳河游船 / 水路巴士</option>
+                            <option value="飞机/航班">国际或地区航班 / 飞机</option>
+                        </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">交通时长及建议（无则留空）</label>
-                        <input type="text" id="edit-day-duration" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none" placeholder="5.5小时 / 建议班次：09:10-14:55">
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">出发城市 ➔ 到达城市</label>
+                        <div class="flex gap-2 items-center">
+                            <input type="text" id="edit-day-transport-from" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-amber-500" placeholder="出发城市 (例: 巴黎)" title="出发城市">
+                            <span class="text-gray-400 font-bold">➔</span>
+                            <input type="text" id="edit-day-transport-to" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-amber-500" placeholder="到达城市 (例: 尼斯)" title="到达城市">
+                        </div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">住宿城市 / 酒店 (例如: 巴黎)</label>
-                        <input type="text" id="edit-day-accommodation" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none" placeholder="巴黎 / 尼斯 / 佛罗伦萨">
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">出发时间（时刻）</label>
+                        <input type="time" id="edit-day-transport-dep-time" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-xs">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">航班信息 (无则留空)</label>
-                        <input type="text" id="edit-day-flight" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none" placeholder="参考航班：CA833 上海 ➔ 巴黎">
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">到达时间（时刻）</label>
+                        <input type="time" id="edit-day-transport-arr-time" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-xs">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">停留/乘车大约时长（可选）</label>
+                        <input type="text" id="edit-day-duration" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-xs" placeholder="例如: 5.5小时 / 45分钟">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">特定客房住宿 / 推荐酒店</label>
+                        <input type="text" id="edit-day-accommodation" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-xs" placeholder="例: 巴黎中心埃菲尔铁塔美居酒店">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">关联特定航班字段 (仅首日去程与末日回程推荐填写，留空不显示)</label>
+                        <input type="text" id="edit-day-flight" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-xs" placeholder="具体格式：东航 MU569 | 上海浦东 PVG (12:30 起飞) ➔ 巴黎 CDG (19:05 降落)">
                     </div>
                 </div>
 
@@ -1086,11 +1117,40 @@
                 }
 
                 let transportBadge = '';
-                if (day.transport) {
+                if (day.transportType || day.transport) {
+                    const transType = day.transportType || '交通';
+                    let transText = '';
+                    
+                    // Choose an appropriate icon based on the transport type
+                    let iconClass = 'fa-solid fa-train';
+                    const lowerType = transType.toLowerCase();
+                    if (lowerType.includes('飞') || lowerType.includes('航') || lowerType.includes('plane') || lowerType.includes('flight')) {
+                        iconClass = 'fa-solid fa-plane';
+                    } else if (lowerType.includes('巴') || lowerType.includes('客车') || lowerType.includes('bus')) {
+                        iconClass = 'fa-solid fa-bus';
+                    } else if (lowerType.includes('自驾') || lowerType.includes('车') || lowerType.includes('car') || lowerType.includes('taxi')) {
+                        iconClass = 'fa-solid fa-car';
+                    } else if (lowerType.includes('港') || lowerType.includes('船') || lowerType.includes('游轮') || lowerType.includes('ship') || lowerType.includes('boat')) {
+                        iconClass = 'fa-solid fa-ship';
+                    }
+
+                    if (day.depCity && day.arrCity) {
+                        transText = `${transType}: ${day.depCity} ➔ ${day.arrCity}`;
+                    } else if (day.depCity || day.arrCity) {
+                        transText = `${transType}: ${day.depCity || day.arrCity}`;
+                    } else {
+                        transText = day.transport;
+                    }
+
+                    let timeText = '';
+                    if (day.depTime || day.arrTime) {
+                        timeText = ` (${day.depTime || '??:??'} - ${day.arrTime || '??:??'})`;
+                    }
+
                     transportBadge = `
-                        <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-800 text-xs px-3 py-1 rounded-full border border-blue-100">
-                            <i class="fa-solid fa-train"></i>
-                            <span class="font-bold">${escapeHtml(day.transport)}</span>
+                        <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-800 text-xs px-3 py-1 rounded-full border border-blue-100 flex-wrap">
+                            <i class="${iconClass}"></i>
+                            <span class="font-bold">${escapeHtml(transText)}${escapeHtml(timeText)}</span>
                             ${day.duration ? `<span class="opacity-60">|</span> <span class="font-medium">${escapeHtml(day.duration)}</span>` : ''}
                         </div>
                     `;
@@ -1217,7 +1277,14 @@
             document.getElementById('edit-day-title').value = day.title || '';
             document.getElementById('edit-day-phase').value = day.phase || '';
             document.getElementById('edit-day-custom-date').value = day.customDate || '';
-            document.getElementById('edit-day-transport').value = day.transport || '';
+            
+            // Structured transport fields
+            document.getElementById('edit-day-transport').value = day.transportType || day.transport || '';
+            document.getElementById('edit-day-transport-from').value = day.depCity || '';
+            document.getElementById('edit-day-transport-to').value = day.arrCity || '';
+            document.getElementById('edit-day-transport-dep-time').value = day.depTime || '';
+            document.getElementById('edit-day-transport-arr-time').value = day.arrTime || '';
+
             document.getElementById('edit-day-duration').value = day.duration || '';
             document.getElementById('edit-day-accommodation').value = day.accommodation || '';
             document.getElementById('edit-day-flight').value = day.flight || '';
@@ -1255,7 +1322,14 @@
             const title = document.getElementById('edit-day-title').value.trim();
             const phase = document.getElementById('edit-day-phase').value.trim();
             const customDate = document.getElementById('edit-day-custom-date').value;
-            const transport = document.getElementById('edit-day-transport').value.trim();
+            
+            // Get structured transport fields
+            const transportType = document.getElementById('edit-day-transport').value.trim();
+            const depCity = document.getElementById('edit-day-transport-from').value.trim();
+            const arrCity = document.getElementById('edit-day-transport-to').value.trim();
+            const depTime = document.getElementById('edit-day-transport-dep-time').value.trim();
+            const arrTime = document.getElementById('edit-day-transport-arr-time').value.trim();
+
             const duration = document.getElementById('edit-day-duration').value.trim();
             const accommodation = document.getElementById('edit-day-accommodation').value.trim();
             const flight = document.getElementById('edit-day-flight').value.trim();
@@ -1270,12 +1344,25 @@
                 }
             });
 
+            // Derive legacy transport compatibility for safety
+            let legacyTransport = transportType;
+            if (depCity && arrCity) {
+                legacyTransport = `${transportType ? transportType + ': ' : ''}${depCity} ➔ ${arrCity}`;
+            } else if (depCity || arrCity) {
+                legacyTransport = `${transportType ? transportType + ': ' : ''}${depCity || arrCity}`;
+            }
+
             currentData.days[index] = {
                 dayNum,
                 title,
                 phase,
                 customDate,
-                transport,
+                transport: legacyTransport || '',
+                transportType,
+                depCity,
+                arrCity,
+                depTime,
+                arrTime,
                 duration,
                 accommodation,
                 flight,
