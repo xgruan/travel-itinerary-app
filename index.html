@@ -258,19 +258,19 @@
                         </datalist>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">停留/乘车大约时长（可选）</label>
-                        <input type="text" id="edit-day-duration" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-xs" placeholder="例如: 5.5小时 / 45分钟">
+                        <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">乘车/飞机大约时长 (基于时刻自动计算)</label>
+                        <input type="text" id="edit-day-duration" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-xs bg-gray-50 cursor-not-allowed text-gray-500 font-semibold" placeholder="（输入出发和到达时刻后自动计算）" readonly>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">出发时间（时刻）</label>
-                        <input type="time" id="edit-day-transport-dep-time" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-xs">
+                        <input type="time" id="edit-day-transport-dep-time" oninput="updateDuration()" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-xs">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">到达时间（时刻）</label>
-                        <input type="time" id="edit-day-transport-arr-time" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-xs">
+                        <input type="time" id="edit-day-transport-arr-time" oninput="updateDuration()" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-xs">
                     </div>
                 </div>
 
@@ -1324,8 +1324,56 @@
                 addEditActivity();
             }
 
+            // Recalculate duration automatically on open
+            updateDuration();
+
             document.getElementById('edit-modal').classList.remove('hidden');
             document.body.classList.add('overflow-hidden');
+        }
+
+        // Auto calculate duration based on departure and arrival times
+        function updateDuration() {
+            const depTime = document.getElementById('edit-day-transport-dep-time').value;
+            const arrTime = document.getElementById('edit-day-transport-arr-time').value;
+            const durationInput = document.getElementById('edit-day-duration');
+            
+            if (!depTime || !arrTime) {
+                durationInput.value = '';
+                return;
+            }
+            
+            const [depH, depM] = depTime.split(':').map(Number);
+            const [arrH, arrM] = arrTime.split(':').map(Number);
+            
+            if (isNaN(depH) || isNaN(depM) || isNaN(arrH) || isNaN(arrM)) {
+                durationInput.value = '';
+                return;
+            }
+            
+            let depMinutes = depH * 60 + depM;
+            let arrMinutes = arrH * 60 + arrM;
+            
+            let diff = arrMinutes - depMinutes;
+            if (diff < 0) {
+                // If arrival time is earlier than departure time, assume it's overnight/next-day travel
+                diff += 24 * 60;
+            }
+            
+            const h = Math.floor(diff / 60);
+            const m = diff % 60;
+            
+            let result = '';
+            if (h > 0 && m > 0) {
+                result = `${h}小时${m}分钟`;
+            } else if (h > 0) {
+                result = `${h}小时`;
+            } else if (m > 0) {
+                result = `${m}分钟`;
+            } else {
+                result = '0分钟';
+            }
+            
+            durationInput.value = result;
         }
 
         function addEditActivity(time = '', detail = '') {
