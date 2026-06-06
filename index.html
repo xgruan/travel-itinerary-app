@@ -1150,14 +1150,14 @@
             currentData.days.forEach((day, index) => {
                 const btn = document.createElement('button');
                 btn.id = `nav-btn-${index}`;
-                btn.className = "nav-btn shrink-0 px-3 py-1 rounded-xl text-xs font-semibold bg-gray-50 hover:bg-gray-100/80 border border-gray-200/50 text-gray-600 hover:text-gray-900 transition duration-200 flex flex-col items-center justify-center min-w-[76px] h-[40px]";
+                btn.className = "nav-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-50 hover:bg-gray-100/80 border border-gray-200/50 text-gray-600 hover:text-gray-900 transition duration-200 flex flex-col items-center justify-center min-w-[85px] h-[46px]";
                 
                 const dayLabel = day.dayNum || `D${index+1}`;
                 const dateLabel = getShortDateStr(day, index);
                 
                 btn.innerHTML = `
-                    <span class="text-[11px] font-bold leading-none">${dayLabel}</span>
-                    <span class="text-[8px] opacity-70 font-medium leading-none mt-1">${dateLabel}</span>
+                    <span class="text-[12px] font-bold leading-none">${dayLabel}</span>
+                    <span class="text-[10px] opacity-75 font-semibold leading-none mt-1.5">${dateLabel}</span>
                 `;
                 btn.onclick = () => scrollToDay(index);
                 container.appendChild(btn);
@@ -1307,8 +1307,8 @@
 
         // View Day Navigation Scrolls
         function scrollToDay(index) {
-            const inactiveClass = "nav-btn shrink-0 px-3 py-1 rounded-xl text-xs font-semibold bg-gray-50 hover:bg-gray-100/80 border border-gray-200/50 text-gray-600 hover:text-gray-900 transition duration-200 flex flex-col items-center justify-center min-w-[76px] h-[40px]";
-            const activeClass = "nav-btn active shrink-0 px-3 py-1 rounded-xl text-xs font-bold text-white bg-gray-900 border border-transparent transition duration-200 flex flex-col items-center justify-center min-w-[76px] h-[40px]";
+            const inactiveClass = "nav-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-50 hover:bg-gray-100/80 border border-gray-200/50 text-gray-600 hover:text-gray-900 transition duration-200 flex flex-col items-center justify-center min-w-[85px] h-[46px]";
+            const activeClass = "nav-btn active shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-gray-900 border border-transparent transition duration-200 flex flex-col items-center justify-center min-w-[85px] h-[46px]";
 
             // Remove active classes
             document.querySelectorAll('.nav-btn').forEach(btn => {
