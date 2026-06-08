@@ -410,12 +410,18 @@
                     title: "巴黎 ➔ 尼斯 (跨越法兰西)",
                     phase: "第二阶段：蔚蓝海岸阳光",
                     transport: "TGV高铁",
-                    duration: "耗时：5.5小时 | 建议班次：09:10 - 14:55",
+                    transportType: "高铁",
+                    depCity: "巴黎里昂站 (Gare de Lyon)",
+                    arrCity: "尼斯城站 (Nice Ville)",
+                    depTime: "09:38",
+                    arrTime: "15:38",
+                    transportNo: "TGV INOUI 6173",
+                    duration: "耗时：6小时 (最佳黄金班次)",
                     accommodation: "尼斯阿斯顿拉斯卡拉酒店 (Hôtel Aston La Scala)",
                     flight: "",
                     activities: [
-                        { time: "上午/下午", detail: "早起乘车前往火车站，搭乘超舒适的TGV高铁，穿越美丽的法国田野前往蔚蓝海岸尼斯。" },
-                        { time: "下午", detail: "抵达尼斯，办理入住。下午前往著名的“英国人漫步大道”吹海风、散步。" },
+                        { time: "上午/下午", detail: "早起乘车前往巴黎里昂站 (Paris Gare de Lyon)，搭乘最佳班次法国 TGV INOUI 6173 高铁 (09:38 - 15:38) 前往蔚蓝海岸尼斯，一路饱览优美的南法田野风光。" },
+                        { time: "下午", detail: "抵达尼斯，办理酒店入住。下午前往著名的“英国人漫步大道”吹海风、散步。" },
                         { time: "傍晚", detail: "逛尼斯老城（Old Town），晚餐享用尼斯海鲜拼盘。" }
                     ]
                 },
@@ -1134,6 +1140,26 @@
                         day11.flight = "东航 MU786 | 威尼斯马可波罗 VCE (12:40 起飞) ➔ 上海浦东 PVG [2026-08-23]";
                         if (day11.activities && day11.activities[1]) {
                             day11.activities[1].detail = "【退税离境】于机场办理值机和行李直挂，并悉数办妥在欧洲采购物品的海关退税手续，搭乘东方航空 MU786 航班起飞返程，翱翔在万米高空告别此次横跨十一日的意法艺术之旅。";
+                        }
+                        // Save healed state to local storage so it propagates
+                        localStorage.setItem('travel_itinerary_data_v1', JSON.stringify(currentData));
+                    }
+                }
+
+                // Self-healing migration patch for Day 4 TGV train recommendations
+                if (currentData.days && currentData.days.length >= 4) {
+                    const day4 = currentData.days[3];
+                    if (day4 && (!day4.transportNo || day4.duration.includes("09:10 - 14:55"))) {
+                        day4.transport = "TGV高铁";
+                        day4.transportType = "高铁";
+                        day4.depCity = "巴黎里昂站 (Gare de Lyon)";
+                        day4.arrCity = "尼斯城站 (Nice Ville)";
+                        day4.depTime = "09:38";
+                        day4.arrTime = "15:38";
+                        day4.transportNo = "TGV INOUI 6173";
+                        day4.duration = "耗时：6小时 (最佳黄金班次)";
+                        if (day4.activities && day4.activities[0]) {
+                            day4.activities[0].detail = "早起乘车前往巴黎里昂站 (Paris Gare de Lyon)，搭乘最佳班次法国 TGV INOUI 6173 高铁 (09:38 - 15:38) 前往蔚蓝海岸尼斯，一路饱览优美的南法田野风光。";
                         }
                         // Save healed state to local storage so it propagates
                         localStorage.setItem('travel_itinerary_data_v1', JSON.stringify(currentData));
