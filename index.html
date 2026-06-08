@@ -1220,46 +1220,62 @@
                         let transText = '';
                         let iconClass = 'fa-train';
 
-                        if (day.transportType || day.transport) {
-                            const transType = day.transportType || '交通';
-                            const lowerType = transType.toLowerCase();
-                            if (lowerType.includes('飞') || lowerType.includes('航') || lowerType.includes('plane') || lowerType.includes('flight')) {
-                                iconClass = 'fa-plane';
-                            } else if (lowerType.includes('巴') || lowerType.includes('客车') || lowerType.includes('bus')) {
-                                iconClass = 'fa-bus';
-                            } else if (lowerType.includes('自驾') || lowerType.includes('车') || lowerType.includes('car') || lowerType.includes('taxi')) {
-                                iconClass = 'fa-car';
-                            } else if (lowerType.includes('船') || lowerType.includes('游轮') || lowerType.includes('ship') || lowerType.includes('boat')) {
-                                iconClass = 'fa-ship';
-                            }
+                        const hasNormalTransport = day.transportType || day.transport;
+                        const hasFlight = day.flight;
 
-                            const transNoPart = day.transportNo ? ` ${day.transportNo}` : '';
-                            if (day.depCity && day.arrCity) {
-                                transText = `${transType}${transNoPart}: ${day.depCity} ➔ ${day.arrCity}`;
-                            } else if (day.depCity || day.arrCity) {
-                                transText = `${transType}${transNoPart}: ${day.depCity || day.arrCity}`;
-                            } else if (day.transportNo) {
-                                transText = `${transType}${transNoPart}`;
-                            } else {
-                                transText = day.transport;
-                            }
-
-                            let timeText = '';
-                            if (day.depTime || day.arrTime) {
-                                timeText = ` (${day.depTime || '??:??'} - ${day.arrTime || '??:??'})`;
-                            }
-
-                            const durationText = day.duration ? ` | ${day.duration}` : '';
-                            const fullText = `${transText}${timeText}${durationText}`;
-                            
-                            if (fullText && fullText.trim() && transType !== '市内穿梭') {
+                        if (hasNormalTransport || hasFlight) {
+                            // Render flights inside chronological transport mode list
+                            if (hasFlight) {
                                 htmlList += `
                                     <div class="flex items-start gap-1.5 py-1 border-b border-gray-100 last:border-0">
                                         <span class="font-extrabold text-indigo-600 text-[10px] w-12 shrink-0 select-none mt-0.5">${dayLabel}:</span>
-                                        <i class="fa-solid ${iconClass} text-[10px] text-gray-400 mt-1 shrink-0"></i>
-                                        <span class="text-xs text-gray-700 leading-normal">${escapeHtml(fullText)}</span>
+                                        <i class="fa-solid fa-plane text-[10px] text-rose-500 mt-1 shrink-0"></i>
+                                        <span class="text-xs text-gray-700 leading-normal font-bold bg-rose-50/55 px-1.5 py-0.5 rounded border border-rose-100/40">${escapeHtml(day.flight)}</span>
                                     </div>
                                 `;
+                            }
+
+                            if (hasNormalTransport) {
+                                const transType = day.transportType || '交通';
+                                const lowerType = transType.toLowerCase();
+                                if (lowerType.includes('飞') || lowerType.includes('航') || lowerType.includes('plane') || lowerType.includes('flight')) {
+                                    iconClass = 'fa-plane';
+                                } else if (lowerType.includes('巴') || lowerType.includes('客车') || lowerType.includes('bus')) {
+                                    iconClass = 'fa-bus';
+                                } else if (lowerType.includes('自驾') || lowerType.includes('车') || lowerType.includes('car') || lowerType.includes('taxi')) {
+                                    iconClass = 'fa-car';
+                                } else if (lowerType.includes('船') || lowerType.includes('游轮') || lowerType.includes('ship') || lowerType.includes('boat')) {
+                                    iconClass = 'fa-ship';
+                                }
+
+                                const transNoPart = day.transportNo ? ` ${day.transportNo}` : '';
+                                if (day.depCity && day.arrCity) {
+                                    transText = `${transType}${transNoPart}: ${day.depCity} ➔ ${day.arrCity}`;
+                                } else if (day.depCity || day.arrCity) {
+                                    transText = `${transType}${transNoPart}: ${day.depCity || day.arrCity}`;
+                                } else if (day.transportNo) {
+                                    transText = `${transType}${transNoPart}`;
+                                } else {
+                                    transText = day.transport;
+                                }
+
+                                let timeText = '';
+                                if (day.depTime || day.arrTime) {
+                                    timeText = ` (${day.depTime || '??:??'} - ${day.arrTime || '??:??'})`;
+                                }
+
+                                const durationText = day.duration ? ` | ${day.duration}` : '';
+                                const fullText = `${transText}${timeText}${durationText}`;
+                                
+                                if (fullText && fullText.trim() && transType !== '市内穿梭') {
+                                    htmlList += `
+                                        <div class="flex items-start gap-1.5 py-1 border-b border-gray-100 last:border-0">
+                                            <span class="font-extrabold text-indigo-600 text-[10px] w-12 shrink-0 select-none mt-0.5">${dayLabel}:</span>
+                                            <i class="fa-solid ${iconClass} text-[10px] text-gray-400 mt-1 shrink-0"></i>
+                                            <span class="text-xs text-gray-700 leading-normal">${escapeHtml(fullText)}</span>
+                                        </div>
+                                    `;
+                                }
                             }
                         }
                     });
