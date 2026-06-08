@@ -1274,6 +1274,15 @@
                                     `;
                                 }
                             }
+                        } else {
+                            // If a day has absolutely no transport elements, render a beautiful local walking/subway explore placeholder so all 11 days are sequential!
+                            htmlList += `
+                                <div class="flex items-start gap-1.5 py-1 border-b border-gray-100 last:border-0">
+                                    <span class="font-extrabold text-indigo-600/60 text-[10px] w-20 shrink-0 select-none mt-0.5">${dynamicDayLabel}:</span>
+                                    <i class="fa-solid fa-person-walking text-[10px] text-gray-400 mt-1 shrink-0"></i>
+                                    <span class="text-xs text-gray-500 leading-normal italic">当地探索 / 城市漫游 (公共交通或步行)</span>
+                                </div>
+                            `;
                         }
                     });
 
