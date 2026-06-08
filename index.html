@@ -1123,6 +1123,7 @@
         function renderAll() {
             if (currentData) {
                 currentData.startDate = "2026-08-13";
+                let didMigrate = false;
                 
                 // Self-healing migration patch for Day 11 return flight
                 if (currentData.days && currentData.days.length >= 11) {
@@ -1134,8 +1135,7 @@
                         if (day11.activities && day11.activities[1]) {
                             day11.activities[1].detail = "【退税离境】于机场办理值机和行李直挂，并悉数办妥在欧洲采购物品的海关退税手续，搭乘东方航空 MU786 航班 (12:40 起飞) 起飞返程，翱翔在万米高空告别此次横跨十一日的意法艺术之旅。";
                         }
-                        // Save healed state to local storage so it propagates
-                        localStorage.setItem('travel_itinerary_data_v1', JSON.stringify(currentData));
+                        didMigrate = true;
                     }
                 }
 
@@ -1154,9 +1154,12 @@
                         if (day4.activities && day4.activities[0]) {
                             day4.activities[0].detail = "早起乘车前往巴黎里昂站 (Paris Gare de Lyon)，搭乘最佳班次法国 TGV INOUI 6173 高铁 (09:38 - 15:38) 前往蔚蓝海岸尼斯，一路饱览优美的南法田野风光。";
                         }
-                        // Save healed state to local storage so it propagates
-                        localStorage.setItem('travel_itinerary_data_v1', JSON.stringify(currentData));
+                        didMigrate = true;
                     }
+                }
+
+                if (didMigrate) {
+                    saveToLocalStorage();
                 }
             }
             renderTips();
