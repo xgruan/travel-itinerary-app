@@ -48,7 +48,7 @@
                 法意纵贯 · 文艺复兴之路
             </h1>
             <p class="text-gray-200 text-sm md:text-lg tracking-wider max-w-2xl font-light">
-                巴黎 - 尼斯 - 佛罗伦萨 - 威尼斯 - 罗马 | 艺术、历史与蔚蓝海岸的完美融合
+                巴黎 - 尼斯 - 罗马 - 佛罗伦萨 - 威尼斯 | 艺术、历史与蔚蓝海岸的完美融合
             </p>
             <div class="mt-6 flex flex-wrap justify-center gap-3">
                 <button onclick="resetData(true)" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 text-xs md:text-sm px-4 py-2 rounded-full backdrop-blur-sm transition duration-300">
@@ -427,6 +427,14 @@
                     duration: "全天往返",
                     accommodation: "尼斯阿斯顿拉斯卡拉酒店 (Hôtel Aston La Scala)",
                     flight: "",
+                {
+                    dayNum: "Day 5",
+                    title: "蔚蓝精华：埃兹小镇与摩纳哥",
+                    phase: "第二阶段：蔚蓝海岸阳光",
+                    transport: "乘车/巴士",
+                    duration: "全天往返",
+                    accommodation: "尼斯阿斯顿拉斯卡拉酒店 (Hôtel Aston La Scala)",
+                    flight: "",
                     activities: [
                         { time: "上午", detail: "乘中巴车/公交前往中世纪悬崖中古小镇——埃兹小镇（Eze），俯瞰地中海蔚蓝绝景。" },
                         { time: "下午", detail: "前往摩纳哥公国游览豪华游艇港口，近距离感受蒙特卡洛的奢华与皇室底蕴。" },
@@ -435,87 +443,122 @@
                 },
                 {
                     dayNum: "Day 6",
-                    title: "尼斯 ➔ 佛罗伦萨 (跨国之旅)",
-                    phase: "第三阶段：文艺复兴摇篮与水城",
-                    transport: "跨国火车",
-                    duration: "耗时约6小时 (经热那亚中转) | 建议时间：08:30 - 14:30",
-                    accommodation: "佛罗伦萨巴廖尼大酒店 (Grand Hotel Baglioni)",
-                    flight: "",
+                    title: "尼斯 ➔ 罗马 (跨国之旅)",
+                    phase: "第三阶段：深度罗马与梵蒂冈",
+                    transport: "班机直飞",
+                    transportType: "飞机",
+                    transportNo: "AZ341",
+                    depCity: "尼斯",
+                    arrCity: "罗马",
+                    depTime: "09:15",
+                    arrTime: "10:30",
+                    duration: "1小时15分钟",
+                    accommodation: "罗马大都会星级酒店 (Starhotels Metropole Rome)",
+                    flight: "意航 AZ341 | 尼斯 NCE (09:15 起飞) ➔ 罗马 FCO (10:30 降落)",
                     activities: [
-                        { time: "上午/下午", detail: "退房坐跨国列车体验风景最优美的意法沿海岸线铁道，中途在意大利热那亚（Genoa）简要换乘后前往佛罗伦萨。" },
-                        { time: "下午", detail: "抵达“翡冷翠”佛罗伦萨。首先游览佛罗伦萨地标、外墙极为华美瑰丽的圣母百花大教堂。" },
-                        { time: "傍晚", detail: "登上米开朗基罗广场，手执吉拉托Gelato，一同饱览整座城市文艺复兴砖红穹顶在晚霞中的绝美时刻。" }
+                        { time: "上午", detail: "【搭乘班机】上午退房前往尼斯机场，搭乘意大利航空 AZ341 航班直飞意大利首都罗马（FCO）。飞越蔚蓝地中海，10:30 顺利降落。" },
+                        { time: "下午", detail: "【初识永恒之城】前往罗马市区酒店办理入住。下午探访古典比例完美的万神殿（Pantheon），漫步充满巴洛克风情的纳沃纳广场，欣赏贝尼尼设计的四河喷泉。" },
+                        { time: "傍晚", detail: "游览著名的特莱维喷泉（即《罗马假日》中的“许愿池”），在清澈泉水中投下硬币许愿，晚餐抢先品尝正宗罗马炭烤羊排与特色卡邦尼意面。" }
                     ]
                 },
                 {
                     dayNum: "Day 7",
-                    title: "佛罗伦萨 ➔ 威尼斯",
-                    phase: "第三阶段：文艺复兴摇篮与水城",
-                    transport: "意铁高铁",
-                    duration: "耗时2.2小时 | 建议时间：15:00 - 17:15",
-                    accommodation: "威尼斯斯普兰迪德星级酒店 (Splendid Venice - Starhotels Collezione)",
+                    title: "信仰与辉煌：梵蒂冈全天",
+                    phase: "第三阶段：深度罗马与梵蒂冈",
+                    transport: "地铁/接驳",
+                    transportType: "城市交通",
+                    transportNo: "",
+                    depCity: "",
+                    arrCity: "",
+                    depTime: "",
+                    arrTime: "",
+                    duration: "市内穿梭",
+                    accommodation: "罗马大都会星级酒店 (Starhotels Metropole Rome)",
                     flight: "",
                     activities: [
-                        { time: "上午", detail: "参观馆藏丰富的乌菲兹美术馆（Galleria degli Uffizi），驻足品读波提切利《维纳斯的诞生》、达芬奇《三博士来朝》等世界名作。" },
-                        { time: "中午/下午", detail: "在中央市场（Mercato Centrale）品尝超爽口鲜香的经典佛罗伦萨牛肚包与米其林级别的T骨牛排。" },
-                        { time: "下午", detail: "乘意铁高铁前往举世闻名的浪漫水城——威尼斯 (2.2h)，体验水路巴士抵达主岛威尼斯。" },
-                        { time: "晚上", detail: "于极具情调的圣马可广场（Piazza San Marco）漫步，享受现场乐队列演奏的意大利浪漫夜曲。" }
+                        { time: "上午", detail: "【梵蒂冈博物馆】提早预约 08:30 首场入门票，深度游览西斯廷教堂，瞻仰米开朗基罗的巅峰壁画《创世纪》与拉斐尔画室的名作。" },
+                        { time: "下午", detail: "【圣彼得大教堂】参观基督教世界最雄伟的圣彼得大教堂。强烈推荐选择登顶穹顶，俯瞰由贝尼尼宏伟设计的对称“钥匙孔”造型广场。" },
+                        { time: "傍晚", detail: "步行至圣天使桥，看夕阳余晖下台伯河的波光粼粼与圣天使堡的恢美剪影，享受古老罗马的惬意落日黄昏。" }
                     ]
                 },
                 {
                     dayNum: "Day 8",
-                    title: "威尼斯 ➔ 罗马 (南下永恒之城)",
-                    phase: "第四阶段：深度罗马与梵蒂冈",
-                    transport: "高铁 (Venezia S. Lucia ➔ Roma Termini)",
-                    duration: "耗时 3小时50分钟 | 建议时间：08:26 - 12:25",
-                    accommodation: "罗马大都会星级酒店 (Starhotels Metropole Rome)",
+                    title: "罗马 ➔ 佛罗伦萨 (北上翡冷翠)",
+                    phase: "第四阶段：文艺复兴摇篮与水城",
+                    transport: "意铁红箭高铁",
+                    transportType: "火车",
+                    transportNo: "FR9514",
+                    depCity: "罗马",
+                    arrCity: "佛罗伦萨",
+                    depTime: "08:50",
+                    arrTime: "10:22",
+                    duration: "1小时32分钟",
+                    accommodation: "佛罗伦萨巴廖尼大酒店 (Grand Hotel Baglioni)",
                     flight: "",
                     activities: [
-                        { time: "中午", detail: "抵达意大利首都、千年古城罗马。前往酒店收拾妥当。" },
-                        { time: "下午", detail: "探访古典比例完美的万神殿（Pantheon）、在著名的特莱维喷泉（法国著名电影中赫本买雪糕的“许愿池”）投下硬币。" },
-                        { time: "下午/晚上", detail: "漫步美丽的纳沃纳广场（Piazza Navona），欣赏贝尼尼的四河喷泉。晚餐可以品尝罗马卡邦尼意面。" }
+                        { time: "上午", detail: "【高铁北上】清晨退房，前往罗马中央车站（Termini），搭乘意大利红箭 Frecciarossa 高铁北上佛罗伦萨。仅需1.5小时快速直达文艺复兴圣地“翡冷翠”。" },
+                        { time: "下午", detail: "【圣母百花大教堂】寄存行李后，前往游览地标圣母百花大教堂（Duomo），观赏其绿白红大理石交织的异常瑰丽外墙和无与伦比的红砖大穹顶。" },
+                        { time: "傍晚", detail: "登上米开朗基罗广场（Piazzale Michelangelo），手执Gelato意大利冰淇淋，聆听台阶上的乐手现场弹唱，静静俯瞰整座城市在晚霞中的砖红屋脊。" }
                     ]
                 },
                 {
                     dayNum: "Day 9",
-                    title: "信仰与辉煌：梵蒂冈全天",
-                    phase: "第四阶段：深度罗马与梵蒂冈",
-                    transport: "",
-                    duration: "",
-                    accommodation: "罗马大都会星级酒店 (Starhotels Metropole Rome)",
+                    title: "佛罗伦萨 ➔ 威尼斯 (艺术与浪漫水城)",
+                    phase: "第四阶段：文艺复兴摇篮与水城",
+                    transport: "意铁红箭高铁",
+                    transportType: "火车",
+                    transportNo: "FR9426",
+                    depCity: "佛罗伦萨",
+                    arrCity: "威尼斯",
+                    depTime: "14:15",
+                    arrTime: "16:20",
+                    duration: "2小时5分钟",
+                    accommodation: "威尼斯斯普兰迪德星级酒店 (Splendid Venice - Starhotels Collezione)",
                     flight: "",
                     activities: [
-                        { time: "上午", detail: "提早预订梵蒂冈博物馆（Vatican Museums）门票。看西斯廷教堂里米开朗基罗的巅峰巨作《创世纪》和《最后的审判》以及拉斐尔画室。" },
-                        { time: "下午", detail: "参观基督教第一宏伟殿堂——圣彼得大教堂。一定选择登顶，俯瞰由贝尼尼宏伟设计的对称“钥匙孔”造型圣彼得广场。" },
-                        { time: "傍晚", detail: "慢慢漫步到圣天使桥，看夕阳余晖下台伯河的潺潺水波与宏阔剪影。" }
+                        { time: "上午", detail: "【乌菲兹美术馆】提早预订 09:00 场门票，深度领略波提切利《维纳斯的诞生》、达芬奇《三博士来朝》等大师原迹。中午到中央市场尝尝超高人气的牛肚包小吃。" },
+                        { time: "下午", detail: "【意铁高速】退房前往佛罗伦萨火车站，14:15 搭乘高铁前往威尼斯主岛。16:20 抵达，转乘浪漫的水上巴士横穿运河融入威尼斯梦幻景色。" },
+                        { time: "晚上", detail: "【圣马可浪漫夜】在圣马可广场（Piazza San Marco）漫步，看璀璨金色的拜占庭大教堂，倾听弗罗里安咖啡馆前乐团悠扬的四重奏，享受水城梦幻凉夜。" }
                     ]
                 },
                 {
                     dayNum: "Day 10",
-                    title: "帝国遗迹与罗马漫步",
-                    phase: "第四阶段：深度罗马与梵蒂冈",
-                    transport: "",
-                    duration: "",
-                    accommodation: "罗马大都会星级酒店 (Starhotels Metropole Rome)",
+                    title: "威尼斯海岛游与经典摇曳",
+                    phase: "第四阶段：文艺复兴摇篮与水城",
+                    transport: "水上穿梭巴士",
+                    transportType: "客船",
+                    transportNo: "Line 12",
+                    depCity: "主岛",
+                    arrCity: "外岛",
+                    depTime: "09:30",
+                    arrTime: "10:10",
+                    duration: "40分钟",
+                    accommodation: "威尼斯斯普兰迪德星级酒店 (Splendid Venice - Starhotels Collezione)",
                     flight: "",
                     activities: [
-                        { time: "上午", detail: "漫步于罗马的心脏——古罗马斗兽场（Colosseum）、君士坦丁凯旋门，穿行于宏伟废墟的古罗马遗址中，探寻千年前的帝国盛景。" },
-                        { time: "下午/傍晚", detail: "闲逛西班牙广场（Piazza di Spagna），沿着《罗马假日》里赫本的足迹走下西班牙台阶，品尝冰淇淋，购买当地伴手礼。" },
-                        { time: "晚上", detail: "于罗马老城区品尝地道的罗马炭烤小羊排与传统意式手工匹萨（Pizza），享受在欧洲的最后一个优雅悠闲之夜。" }
+                        { time: "上午", detail: "【彩色海岛行】搭乘水上巴前往著名的玻璃岛（Murano）观摩精湛的玻璃吹制表演，之后转往绚丽缤纷的落笔之地——彩色岛（Burano），在彩虹般的矮楼前留下极美旅行照。" },
+                        { time: "下午", detail: "【贡多拉体验】午后回主岛，乘坐水城特有的黑色传统“贡多拉”（Gondola），伴随着船夫轻柔的桨声穿梭于威尼斯斑驳而幽静的中世纪水巷中。" },
+                        { time: "傍晚", detail: "登上里奥托桥（Ponte di Rialto）俯瞰威尼斯大运河上往来穿梭的熙攘船只与金暮晚霞，晚餐在河畔餐厅享用名吃黑墨鱼汁面与炸海鲜拼盘。" }
                     ]
                 },
                 {
                     dayNum: "Day 11",
-                    title: "罗马返程 ➔ 顺利安抵上海",
-                    phase: "第四阶段：深度罗马与梵蒂冈",
-                    transport: "返程航班",
-                    duration: "晚间离境",
-                    accommodation: "飞机上 (东方航空 MU788 航班机舱)",
-                    flight: "东航 MU788 | 罗马 FCO (21:10 起飞) ➔ 上海浦东 PVG (次日 14:35 降落) [2026-08-23]",
+                    title: "威尼斯返程 ➔ 顺利安抵上海",
+                    phase: "第四阶段：文艺复兴摇篮与水城",
+                    transport: "返程联程航班",
+                    transportType: "飞机",
+                    transportNo: "LH329",
+                    depCity: "威尼斯",
+                    arrCity: "上海",
+                    depTime: "12:40",
+                    arrTime: "06:30",
+                    duration: "联程离境",
+                    accommodation: "飞机上 (温馨的家/机舱)",
+                    flight: "国际班机联程 | 威尼斯马可波罗 VCE (12:40 起飞) ➔ 欧洲枢纽中转 ➔ 上海浦东 PVG [2026-08-23]",
                     activities: [
-                        { time: "上午", detail: "在罗马度过慵懒而美好的清晨。可以在经典的手工咖啡馆品尝一杯纯正 Espresso，或去超市采买特色意面和松露酱。" },
-                        { time: "下午", detail: "在酒店享用午餐、办理退房并寄存行李。于 16:30 左右收拾完毕前往罗马菲乌米奇诺机场 (FCO)，预留充沛时间办妥意大利及欧洲物品退税手续。" },
-                        { time: "晚上", detail: "【搭乘班机】21:10 搭乘东方航空 MU788 航班自罗马直飞回国。宿机舱中，次日 14:35 顺利抵达上海浦东国际机场 (PVG)，结束十一日完美法意之旅！" }
+                        { time: "上午", detail: "【整装退房】在水城享用最后一个惬意的意式元气早餐，上午退房行李整装打包，搭乘机场穿梭船，一路饱览威尼斯运河最后美景，前往马可波罗国际机场（VCE）。" },
+                        { time: "下午", detail: "【退税离境】于机场办理值机和行李直挂，并悉数办妥在欧洲采购物品的海关退税手续，登机正式起飞返程，翱翔在万米高空告别此次横跨十一日的意法艺术之旅。" },
+                        { time: "夜间", detail: "【跨时区翱翔】在安静舒适的机舱中享用机载晚餐并沉浸睡眠，跨越时区。次日清晨顺利降落在上海浦东国际机场（PVG），平安回到温馨舒适的家中！" }
                     ]
                 }
             ]
@@ -716,7 +759,7 @@
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentData, null, 2));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "法意10日游-自定义旅游行程_备份.json");
+            downloadAnchor.setAttribute("download", "法意11日游-自定义旅游行程_备份.json");
             document.body.appendChild(downloadAnchor);
             downloadAnchor.click();
             downloadAnchor.remove();
