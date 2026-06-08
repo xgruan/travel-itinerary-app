@@ -1215,7 +1215,7 @@
                         let transText = '';
                         let iconClass = 'fa-train';
 
-                        const hasNormalTransport = day.transportType || day.transport;
+                        const hasNormalTransport = (day.transportType || day.transport) && (day.transportType !== "返程联程航班" && day.transport !== "返程联程航班");
                         const hasFlight = day.flight;
 
                         if (hasNormalTransport || hasFlight) {
