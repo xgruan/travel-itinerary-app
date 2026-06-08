@@ -363,9 +363,9 @@
                     transport: "",
                     duration: "",
                     accommodation: "巴黎中心埃菲尔铁塔美居酒店 (Hôtel Mercure Paris Centre Tour Eiffel)",
-                    flight: "东航 MU569 | 上海浦东 PVG (12:30 起飞) ➔ 巴黎 CDG (19:05 降落)",
+                    flight: "东航 MU569 | 上海浦东 PVG (12:20 起飞) ➔ 巴黎 CDG (19:05 降落)",
                     activities: [
-                        { time: "中午/傍晚", detail: "【班机直飞】12:30 搭乘东方航空 MU569 班机自上海浦东(PVG)起飞，经过约12.5小时舒适飞行，于 19:05 降落巴黎戴高乐机场(CDG)。" },
+                        { time: "中午/傍晚", detail: "【班机直飞】12:20 搭乘东方航空 MU569 班机自上海浦东(PVG)起飞，经过约12.5小时舒适飞行，于 19:05 降落巴黎戴高乐机场(CDG)。" },
                         { time: "晚上", detail: "【办妥入住】抵达机场办理入境并提取行李，乘车前往巴黎市区酒店，放置行李稍作休整。" },
                         { time: "夜间", detail: "乘坐塞纳河游船，欣赏经由灯光渲染的巴黎圣母院及埃菲尔铁塔夜景，开始塞纳河畔夜未眠美妙之夜。" }
                     ]
@@ -541,14 +541,14 @@
                     transportNo: "MU786",
                     depCity: "威尼斯",
                     arrCity: "上海",
-                    depTime: "12:40",
-                    arrTime: "06:30",
+                    depTime: "11:30",
+                    arrTime: "05:30",
                     duration: "联程离境",
                     accommodation: "飞机上 (温馨的家/机舱)",
-                    flight: "东航 MU786 | 威尼斯马可波罗 VCE (12:40 起飞) ➔ 上海浦东 PVG (次日06:30降落)",
+                    flight: "东航 MU786 | 威尼斯马可波罗 VCE (11:30 起飞) ➔ 上海浦东 PVG (次日05:30降落)",
                     activities: [
                         { time: "上午", detail: "【整装退房】在水城享用最后一个惬意的意式元气早餐，上午退房行李整装打包，搭乘机场穿梭船，一路饱览威尼斯运河最后美景，前往马可波罗国际机场（VCE）。" },
-                        { time: "下午", detail: "【退税离境】于机场办理值机和行李直挂，并悉数办妥在欧洲采购物品的海关退税手续，搭乘东方航空 MU786 航班起飞返程，翱翔在万米高空告别此次横跨十一日的意法艺术之旅。" },
+                        { time: "下午", detail: "【退税离境】于机场办理值机和行李直挂，并悉数办妥在欧洲采购物品的海关退税手续，搭乘东方航空 MU786 航班 (11:30 起飞) 起飞返程，翱翔在万米高空告别此次横跨十一日的意法艺术之旅。" },
                         { time: "夜间", detail: "【跨时区翱翔】在安静舒适的机舱中享用机载晚餐并沉浸睡眠，跨越时区。次日清晨顺利降落在上海浦东国际机场（PVG），平安回到温馨舒适的家中！" }
                     ]
                 }
@@ -1125,15 +1125,29 @@
                 currentData.startDate = "2026-08-13";
                 let didMigrate = false;
                 
+                // Self-healing migration patch for Day 1 flight timing
+                if (currentData.days && currentData.days.length >= 1) {
+                    const day1 = currentData.days[0];
+                    if (day1 && (day1.flight && (day1.flight.includes("12:30") || !day1.flight.includes("12:20")))) {
+                        day1.flight = "东航 MU569 | 上海浦东 PVG (12:20 起飞) ➔ 巴黎 CDG (19:05 降落)";
+                        if (day1.activities && day1.activities[0]) {
+                            day1.activities[0].detail = "【班机直飞】12:20 搭乘东方航空 MU569 班机自上海浦东(PVG)起飞，经过约12.5小时舒适飞行，于 19:05 降落巴黎戴高乐机场(CDG)。";
+                        }
+                        didMigrate = true;
+                    }
+                }
+
                 // Self-healing migration patch for Day 11 return flight
                 if (currentData.days && currentData.days.length >= 11) {
                     const day11 = currentData.days[10];
-                    if (day11 && (day11.transportNo === "LH329" || !day11.transportNo || day11.flight && day11.flight.includes("LH329") || day11.flight && day11.flight.includes("国际班机联程") || day11.flight && !day11.flight.includes("(次日06:30降落)"))) {
+                    if (day11 && (day11.transportNo === "LH329" || !day11.transportNo || day11.flight && day11.flight.includes("LH329") || day11.flight && day11.flight.includes("国际班机联程") || day11.flight && !day11.flight.includes("(次日05:30降落)"))) {
                         day11.transportNo = "MU786";
                         day11.transport = "返程联程航班";
-                        day11.flight = "东航 MU786 | 威尼斯马可波罗 VCE (12:40 起飞) ➔ 上海浦东 PVG (次日06:30降落)";
+                        day11.depTime = "11:30";
+                        day11.arrTime = "05:30";
+                        day11.flight = "东航 MU786 | 威尼斯马可波罗 VCE (11:30 起飞) ➔ 上海浦东 PVG (次日05:30降落)";
                         if (day11.activities && day11.activities[1]) {
-                            day11.activities[1].detail = "【退税离境】于机场办理值机和行李直挂，并悉数办妥在欧洲采购物品的海关退税手续，搭乘东方航空 MU786 航班 (12:40 起飞) 起飞返程，翱翔在万米高空告别此次横跨十一日的意法艺术之旅。";
+                            day11.activities[1].detail = "【退税离境】于机场办理值机和行李直挂，并悉数办妥在欧洲采购物品的海关退税手续，搭乘东方航空 MU786 航班 (11:30 起飞) 起飞返程，翱翔在万米高空告别此次横跨十一日的意法艺术之旅。";
                         }
                         didMigrate = true;
                     }
