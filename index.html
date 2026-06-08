@@ -104,11 +104,11 @@
                                 <p id="route-cities-panel-txt">巴黎 ➔ 尼斯 ➔ 罗马 ➔ 佛罗伦萨 ➔ 威尼斯</p>
                             </div>
                         </li>
-                        <li class="flex items-center">
-                            <span class="w-8 h-8 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-train"></i></span>
-                            <div>
-                                <p class="font-bold text-gray-800">主交通方式</p>
-                                <p id="transport-modes-panel-txt">国际航班 + TGV高铁 + 意铁客运</p>
+                        <li class="flex items-start">
+                            <span class="w-8 h-8 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center mr-3 shrink-0 mt-0.5"><i class="fa-solid fa-train"></i></span>
+                            <div class="flex-1 min-w-0">
+                                <p class="font-bold text-gray-800">全程交通排期</p>
+                                <div id="transport-modes-panel-txt"></div>
                             </div>
                         </li>
                         <li class="flex items-center">
@@ -1188,20 +1188,64 @@
                 // Update unique transport modes list
                 const transportModesEl = document.getElementById('transport-modes-panel-txt');
                 if (transportModesEl) {
-                    const transports = [];
-                    currentData.days.forEach(day => {
-                        const t = day.transportType || ((day.transport && day.transport.includes(':')) ? day.transport.split(':')[0] : day.transport);
-                        if (t && t.trim()) {
-                            const cleanT = t.trim();
-                            if (!transports.includes(cleanT) && cleanT !== "市内穿梭") {
-                                transports.push(cleanT);
+                    let htmlList = '';
+                    currentData.days.forEach((day, idx) => {
+                        const dayLabel = day.dayNum || `Day ${idx + 1}`;
+                        let transText = '';
+                        let iconClass = 'fa-train';
+
+                        if (day.transportType || day.transport) {
+                            const transType = day.transportType || '交通';
+                            const lowerType = transType.toLowerCase();
+                            if (lowerType.includes('飞') || lowerType.includes('航') || lowerType.includes('plane') || lowerType.includes('flight')) {
+                                iconClass = 'fa-plane';
+                            } else if (lowerType.includes('巴') || lowerType.includes('客车') || lowerType.includes('bus')) {
+                                iconClass = 'fa-bus';
+                            } else if (lowerType.includes('自驾') || lowerType.includes('车') || lowerType.includes('car') || lowerType.includes('taxi')) {
+                                iconClass = 'fa-car';
+                            } else if (lowerType.includes('船') || lowerType.includes('游轮') || lowerType.includes('ship') || lowerType.includes('boat')) {
+                                iconClass = 'fa-ship';
+                            }
+
+                            const transNoPart = day.transportNo ? ` ${day.transportNo}` : '';
+                            if (day.depCity && day.arrCity) {
+                                transText = `${transType}${transNoPart}: ${day.depCity} ➔ ${day.arrCity}`;
+                            } else if (day.depCity || day.arrCity) {
+                                transText = `${transType}${transNoPart}: ${day.depCity || day.arrCity}`;
+                            } else if (day.transportNo) {
+                                transText = `${transType}${transNoPart}`;
+                            } else {
+                                transText = day.transport;
+                            }
+
+                            let timeText = '';
+                            if (day.depTime || day.arrTime) {
+                                timeText = ` (${day.depTime || '??:??'} - ${day.arrTime || '??:??'})`;
+                            }
+
+                            const durationText = day.duration ? ` | ${day.duration}` : '';
+                            const fullText = `${transText}${timeText}${durationText}`;
+                            
+                            if (fullText && fullText.trim() && transType !== '市内穿梭') {
+                                htmlList += `
+                                    <div class="flex items-start gap-1.5 py-1 border-b border-gray-100 last:border-0">
+                                        <span class="font-extrabold text-indigo-600 text-[10px] w-12 shrink-0 select-none mt-0.5">${dayLabel}:</span>
+                                        <i class="fa-solid ${iconClass} text-[10px] text-gray-400 mt-1 shrink-0"></i>
+                                        <span class="text-xs text-gray-700 leading-normal">${escapeHtml(fullText)}</span>
+                                    </div>
+                                `;
                             }
                         }
                     });
-                    if (transports.length > 0) {
-                        transportModesEl.innerText = transports.join(' + ');
+
+                    if (htmlList) {
+                        transportModesEl.innerHTML = `
+                            <div class="space-y-1 mt-1 font-medium bg-gray-50/50 p-2.5 rounded-xl border border-gray-100 max-h-[160px] overflow-y-auto shadow-inner">
+                                ${htmlList}
+                            </div>
+                        `;
                     } else {
-                        transportModesEl.innerText = "自驾高铁 ➔ 城市探索";
+                        transportModesEl.innerHTML = `<p class="text-xs text-gray-400 italic">暂无城际交通规划</p>`;
                     }
                 }
             }
