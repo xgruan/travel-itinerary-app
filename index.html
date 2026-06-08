@@ -1124,6 +1124,21 @@
         function renderAll() {
             if (currentData) {
                 currentData.startDate = "2026-08-13";
+                
+                // Self-healing migration patch for Day 11 return flight
+                if (currentData.days && currentData.days.length >= 11) {
+                    const day11 = currentData.days[10];
+                    if (day11 && (day11.transportNo === "LH329" || !day11.transportNo || day11.flight && day11.flight.includes("LH329") || day11.flight && day11.flight.includes("国际班机联程"))) {
+                        day11.transportNo = "MU786";
+                        day11.transport = "返程联程航班";
+                        day11.flight = "东航 MU786 | 威尼斯马可波罗 VCE (12:40 起飞) ➔ 上海浦东 PVG [2026-08-23]";
+                        if (day11.activities && day11.activities[1]) {
+                            day11.activities[1].detail = "【退税离境】于机场办理值机和行李直挂，并悉数办妥在欧洲采购物品的海关退税手续，搭乘东方航空 MU786 航班起飞返程，翱翔在万米高空告别此次横跨十一日的意法艺术之旅。";
+                        }
+                        // Save healed state to local storage so it propagates
+                        localStorage.setItem('travel_itinerary_data_v1', JSON.stringify(currentData));
+                    }
+                }
             }
             renderTips();
             renderNav();
