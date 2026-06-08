@@ -92,7 +92,7 @@
                             <span class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-calendar-day"></i></span>
                             <div class="flex-1">
                                 <p class="font-bold text-gray-800">出发旅行日期</p>
-                                <p class="text-xs text-emerald-800 font-bold mt-1 bg-emerald-50 border border-emerald-100/60 px-2.5 py-1.5 rounded-lg flex items-center gap-1.5">
+                                <p id="start-date-panel-txt" class="text-xs text-emerald-800 font-bold mt-1 bg-emerald-50 border border-emerald-100/60 px-2.5 py-1.5 rounded-lg flex items-center gap-1.5">
                                     <i class="fa-solid fa-lock text-[10px] text-emerald-500"></i> 2026年08月13日 星期四 (已选定)
                                 </p>
                             </div>
@@ -101,14 +101,14 @@
                             <span class="w-8 h-8 rounded-full bg-amber-50 text-amber-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-route"></i></span>
                             <div>
                                 <p class="font-bold text-gray-800">纵贯途径</p>
-                                <p>巴黎 ➔ 尼斯 ➔ 佛罗伦萨 ➔ 威尼斯 ➔ 罗马</p>
+                                <p id="route-cities-panel-txt">巴黎 ➔ 尼斯 ➔ 罗马 ➔ 佛罗伦萨 ➔ 威尼斯</p>
                             </div>
                         </li>
                         <li class="flex items-center">
                             <span class="w-8 h-8 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-train"></i></span>
                             <div>
                                 <p class="font-bold text-gray-800">主交通方式</p>
-                                <p>TGV高铁 + 跨国火车 + 意铁/italo</p>
+                                <p id="transport-modes-panel-txt">国际航班 + TGV高铁 + 意铁客运</p>
                             </div>
                         </li>
                         <li class="flex items-center">
@@ -1151,6 +1151,61 @@
                 dateInput.value = currentData.startDate || "";
             }
 
+            // Dynamically update Travel Overview Panel
+            if (currentData && Array.isArray(currentData.days)) {
+                // Update total days text
+                const totalDaysEl = document.getElementById('total-days-panel-txt');
+                if (totalDaysEl) {
+                    totalDaysEl.innerText = `${currentData.days.length}天 (跨越 2 个国家)`;
+                }
+
+                // Update start date text dynamically
+                const startDateEl = document.getElementById('start-date-panel-txt');
+                if (startDateEl) {
+                    const longDateStr = formatStartLongDate(currentData.startDate);
+                    startDateEl.innerHTML = `<i class="fa-solid fa-lock text-[10px] text-emerald-500"></i> ${longDateStr} (已选定)`;
+                }
+
+                // Update route cities dynamically based on lodging cities
+                const routeCitiesEl = document.getElementById('route-cities-panel-txt');
+                if (routeCitiesEl) {
+                    const cities = [];
+                    currentData.days.forEach((day, idx) => {
+                        const info = getShortDateStr(day, idx);
+                        if (info && info.city && info.city !== '返程') {
+                            if (cities.length === 0 || cities[cities.length - 1] !== info.city) {
+                                cities.push(info.city);
+                            }
+                        }
+                    });
+                    if (cities.length > 0) {
+                        routeCitiesEl.innerText = cities.join(' ➔ ');
+                    } else {
+                        routeCitiesEl.innerText = "暂无规划城市路线";
+                    }
+                }
+
+                // Update unique transport modes list
+                const transportModesEl = document.getElementById('transport-modes-panel-txt');
+                if (transportModesEl) {
+                    const transports = [];
+                    currentData.days.forEach(day => {
+                        const t = day.transportType || ((day.transport && day.transport.includes(':')) ? day.transport.split(':')[0] : day.transport);
+                        if (t && t.trim()) {
+                            const cleanT = t.trim();
+                            if (!transports.includes(cleanT) && cleanT !== "市内穿梭") {
+                                transports.push(cleanT);
+                            }
+                        }
+                    });
+                    if (transports.length > 0) {
+                        transportModesEl.innerText = transports.join(' + ');
+                    } else {
+                        transportModesEl.innerText = "自驾高铁 ➔ 城市探索";
+                    }
+                }
+            }
+
             // Populate flight overview (show outbound and return from first/last day)
             try {
                 const flightEl = document.getElementById('flight-overview');
@@ -1166,7 +1221,7 @@
                                 <div class="flex items-start gap-2.5">
                                     <span class="flex items-center justify-center w-5 h-5 rounded-full bg-amber-500/10 text-amber-600 shrink-0 mt-0.5"><i class="fa-solid fa-plane-departure text-[10px]"></i></span>
                                     <div class="text-xs">
-                                        <span class="font-extrabold text-amber-600 block text-[9px] uppercase tracking-wider mb-0.5">去程航班 (08月13日 星期四)</span>
+                                        <span class="font-extrabold text-amber-600 block text-[9px] uppercase tracking-wider mb-0.5">去程航班 (${getLongDateOfIndex(currentData.startDate, 0)})</span>
                                         <span class="text-gray-700 font-medium leading-relaxed">${escapeHtml(first)}</span>
                                     </div>
                                 </div>
@@ -1176,7 +1231,7 @@
                                 <div class="flex items-start gap-2.5">
                                     <span class="flex items-center justify-center w-5 h-5 rounded-full bg-sky-500/10 text-sky-600 shrink-0 mt-0.5"><i class="fa-solid fa-plane-arrival text-[10px]"></i></span>
                                     <div class="text-xs">
-                                        <span class="font-extrabold text-sky-600 block text-[9px] uppercase tracking-wider mb-0.5">回程航班 (08月22日 星期六)</span>
+                                        <span class="font-extrabold text-sky-600 block text-[9px] uppercase tracking-wider mb-0.5">回程航班 (${getLongDateOfIndex(currentData.startDate, currentData.days.length - 1)})</span>
                                         <span class="text-gray-700 font-medium leading-relaxed">${escapeHtml(last)}</span>
                                     </div>
                                 </div>
@@ -1677,6 +1732,37 @@
         }
 
         // HTML Escape Helper
+        function formatStartLongDate(dateStr) {
+            if (!dateStr) return '未选定出发日期';
+            try {
+                const dateObj = new Date(dateStr + 'T00:00:00');
+                if (isNaN(dateObj.getTime())) return dateStr;
+                const yyyy = dateObj.getFullYear();
+                const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const dd = String(dateObj.getDate()).padStart(2, '0');
+                const daysOfWeek = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+                const dayName = daysOfWeek[dateObj.getDay()];
+                return `${yyyy}年${mm}月${dd}日 ${dayName}`;
+            } catch (e) {
+                return dateStr;
+            }
+        }
+
+        function getLongDateOfIndex(startDateStr, index) {
+            if (!startDateStr) return '';
+            try {
+                const date = new Date(startDateStr + 'T00:00:00');
+                date.setDate(date.getDate() + index);
+                const mm = String(date.getMonth() + 1).padStart(2, '0');
+                const dd = String(date.getDate()).padStart(2, '0');
+                const daysOfWeek = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+                const dayName = daysOfWeek[date.getDay()];
+                return `${mm}月${dd}日 ${dayName}`;
+            } catch(e) {
+                return '';
+            }
+        }
+
         function escapeHtml(text) {
             if (!text) return '';
             const map = {
