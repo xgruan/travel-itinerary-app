@@ -1191,7 +1191,7 @@
                     const cities = [];
                     currentData.days.forEach((day, idx) => {
                         const info = getShortDateStr(day, idx);
-                        if (info && info.city && info.city !== '返程') {
+                        if (info && info.city && info.city !== '返程' && info.city !== '飞机上' && info.city !== '飞机') {
                             if (cities.length === 0 || cities[cities.length - 1] !== info.city) {
                                 cities.push(info.city);
                             }
