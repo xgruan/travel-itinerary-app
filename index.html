@@ -111,13 +111,6 @@
                                 <div id="transport-modes-panel-txt"></div>
                             </div>
                         </li>
-                        <li class="flex items-center">
-                            <span class="w-8 h-8 rounded-full bg-sky-50 text-sky-500 flex items-center justify-center mr-3 shrink-0"><i class="fa-solid fa-plane-up"></i></span>
-                            <div class="flex-1">
-                                <p class="font-bold text-gray-800">往返航班</p>
-                                <p id="flight-overview" class="text-sm text-gray-600">未设置 — 请在日程中填写首/末日航班信息</p>
-                            </div>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -1217,6 +1210,8 @@
                     let htmlList = '';
                     currentData.days.forEach((day, idx) => {
                         const dayLabel = day.dayNum || `Day ${idx + 1}`;
+                        const dayDateStr = currentData.startDate ? ` (${getLongDateOfIndex(currentData.startDate, idx, true)})` : '';
+                        const dynamicDayLabel = `${dayLabel}${dayDateStr}`;
                         let transText = '';
                         let iconClass = 'fa-train';
 
@@ -1228,7 +1223,7 @@
                             if (hasFlight) {
                                 htmlList += `
                                     <div class="flex items-start gap-1.5 py-1 border-b border-gray-100 last:border-0">
-                                        <span class="font-extrabold text-indigo-600 text-[10px] w-12 shrink-0 select-none mt-0.5">${dayLabel}:</span>
+                                        <span class="font-extrabold text-indigo-600 text-[10px] w-20 shrink-0 select-none mt-0.5">${dynamicDayLabel}:</span>
                                         <i class="fa-solid fa-plane text-[10px] text-rose-500 mt-1 shrink-0"></i>
                                         <span class="text-xs text-gray-700 leading-normal font-bold bg-rose-50/55 px-1.5 py-0.5 rounded border border-rose-100/40">${escapeHtml(day.flight)}</span>
                                     </div>
@@ -1270,7 +1265,7 @@
                                 if (fullText && fullText.trim() && transType !== '市内穿梭') {
                                     htmlList += `
                                         <div class="flex items-start gap-1.5 py-1 border-b border-gray-100 last:border-0">
-                                            <span class="font-extrabold text-indigo-600 text-[10px] w-12 shrink-0 select-none mt-0.5">${dayLabel}:</span>
+                                            <span class="font-extrabold text-indigo-600 text-[10px] w-20 shrink-0 select-none mt-0.5">${dynamicDayLabel}:</span>
                                             <i class="fa-solid ${iconClass} text-[10px] text-gray-400 mt-1 shrink-0"></i>
                                             <span class="text-xs text-gray-700 leading-normal">${escapeHtml(fullText)}</span>
                                         </div>
@@ -1834,7 +1829,7 @@
             }
         }
 
-        function getLongDateOfIndex(startDateStr, index) {
+        function getLongDateOfIndex(startDateStr, index, shortFormat = false) {
             if (!startDateStr) return '';
             try {
                 const date = new Date(startDateStr + 'T00:00:00');
@@ -1843,6 +1838,9 @@
                 const dd = String(date.getDate()).padStart(2, '0');
                 const daysOfWeek = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
                 const dayName = daysOfWeek[date.getDay()];
+                if (shortFormat) {
+                    return `${mm}/${dd}`;
+                }
                 return `${mm}月${dd}日 ${dayName}`;
             } catch(e) {
                 return '';
